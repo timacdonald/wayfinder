@@ -11,7 +11,7 @@ use ReflectionClass;
 
 use function Illuminate\Filesystem\join_paths;
 
-class SolderCommand extends Command
+class GenerateCommand extends Command
 {
     protected $signature = 'solder:generate';
 
@@ -163,4 +163,3 @@ class SolderCommand extends Command
         return in_array($method, ['get', 'head', 'options'], true) ? 'get' : 'post';
     }
 }
-
