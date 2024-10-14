@@ -9,4 +9,3 @@ class TestCase extends BaseTestCase
 {
     use WithWorkbench;
 }
-
