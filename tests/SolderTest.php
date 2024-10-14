@@ -9,4 +9,3 @@ class SolderTest extends TestCase
         $this->assertTrue(true);
     }
 }
-
