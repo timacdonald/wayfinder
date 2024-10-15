@@ -147,8 +147,10 @@ class GenerateCommand extends Command
 
     private function writeBarrelExport(string $child, string $path)
     {
+        $base = basename($path, '.ts');
+
         $this->files->append($path, <<<JAVASCRIPT
-            export * as {$child} from "./{$child}"
+            export * as {$child} from "./{$base}/{$child}"
 
             JAVASCRIPT);
     }

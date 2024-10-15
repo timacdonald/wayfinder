@@ -10,6 +10,13 @@ class TestCase extends BaseTestCase
 {
     use WithWorkbench;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->app->setBasePath(__DIR__.'/../workbench');
+    }
+
     protected function getPackageProviders($app)
     {
         return [
