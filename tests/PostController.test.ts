@@ -3,9 +3,28 @@ import { index } from '../workbench/resources/js/actions/App/Http/Controllers/Po
 
 describe('index', () => {
     test('definition', () => {
-      expect(Object.keys(index.definition)).toEqual(['methods', 'uri', 'action'])
+      expect(Object.keys(index.definition)).toEqual(['methods', 'uri'])
       expect(index.definition.uri).toBe('/posts')
       expect(index.definition.methods).toEqual(['get', 'head'])
-      expect(index.definition.action).toEqual(['App\\Http\\Controllers\\PostController', 'index'])
+    })
+
+    test('href', () => {
+        expect(index.href()).toBe('/posts')
+    })
+
+    test('get', () => {
+        expect(index.get()).toEqual({
+            action: '/posts',
+            method: 'get',
+            _method: 'get'
+        })
+    })
+
+    test('head', () => {
+        expect(index.head()).toEqual({
+            action: '/posts',
+            method: 'get',
+            _method: 'head'
+        })
     })
 })

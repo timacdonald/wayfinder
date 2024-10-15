@@ -68,7 +68,6 @@ class GenerateCommand extends Command
              * @see {$e($reflectionClass->getFileName())}:{$e($reflectionClass->getMethod($function)->getStartLine())}
              */
             export const {$function}: {
-                name: {$e($route->getName())},
                 href: ({$this->formatRouteParameters($parameters)}) => string,
                 {$methods->map(fn ($m) => <<<TYPESCRIPT
                     {$m}: ({$this->formatRouteParameters($parameters)}) => { action: string, method: {$e($this->formMethod($m))}, _method: {$e($m)} },
@@ -76,10 +75,8 @@ class GenerateCommand extends Command
                 definition: {
                     methods: ({$methods->map(fn ($m) => $e($m))->implode(' | ')})[],
                     uri: {$e($uri)},
-                    action: [{$e($route->getControllerClass())}, {$e($function)}],
                  },
             } = {
-                name: {$this->formatRouteName($route)},
                 href: ({$this->formatRouteParameters($parameters)}) => {$this->formatUrl($parameters, $function)},
                 {$methods->map(fn ($m) => <<<TYPESCRIPT
                     {$m}: ({$this->formatRouteParameters($parameters)}) => ({
@@ -91,7 +88,6 @@ class GenerateCommand extends Command
                 definition: {
                     methods: [{$methods->map(fn ($m) => $e($m))->join(', ')}],
                     uri: {$e($uri)},
-                    action: [{$e($route->getControllerClass())}, {$e($function)}],
                 },
             }
 

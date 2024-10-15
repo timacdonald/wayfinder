@@ -3,17 +3,14 @@
  * @see "\/Users\/tim\/Code\/solder\/vendor\/orchestra\/workbench\/src\/Http\/Controllers\/WorkbenchController.php":19
  */
 export const start: {
-    name: "workbench.start",
     href: () => string,
     get: () => { action: string, method: "get", _method: "get" },
     head: () => { action: string, method: "get", _method: "head" },
     definition: {
         methods: ("get" | "head")[],
         uri: "\/_workbench",
-        action: ["Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController", "start"],
      },
 } = {
-    name: "workbench.start",
     href: () => start.definition.uri,
     get: () => ({
         action: start.definition.uri,
@@ -28,7 +25,6 @@ export const start: {
     definition: {
         methods: ["get", "head"],
         uri: "\/_workbench",
-        action: ["Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController", "start"],
     },
 }
 
@@ -37,17 +33,14 @@ export const start: {
  * @see "\/Users\/tim\/Code\/solder\/vendor\/orchestra\/workbench\/src\/Http\/Controllers\/WorkbenchController.php":61
  */
 export const login: {
-    name: "workbench.login",
     href: (args: { userId: string, guard: string }) => string,
     get: (args: { userId: string, guard: string }) => { action: string, method: "get", _method: "get" },
     head: (args: { userId: string, guard: string }) => { action: string, method: "get", _method: "head" },
     definition: {
         methods: ("get" | "head")[],
         uri: "\/_workbench\/login\/{userId}\/{guard?}",
-        action: ["Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController", "login"],
      },
 } = {
-    name: "workbench.login",
     href: (args: { userId: string, guard: string }) => login.definition.uri.replace(
         // TODO do not escape this with json_encode.
         /("userId"}) | ("guard"})/,
@@ -74,7 +67,6 @@ export const login: {
     definition: {
         methods: ["get", "head"],
         uri: "\/_workbench\/login\/{userId}\/{guard?}",
-        action: ["Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController", "login"],
     },
 }
 
@@ -83,17 +75,14 @@ export const login: {
  * @see "\/Users\/tim\/Code\/solder\/vendor\/orchestra\/workbench\/src\/Http\/Controllers\/WorkbenchController.php":85
  */
 export const logout: {
-    name: "workbench.logout",
     href: (args: { guard: string }) => string,
     get: (args: { guard: string }) => { action: string, method: "get", _method: "get" },
     head: (args: { guard: string }) => { action: string, method: "get", _method: "head" },
     definition: {
         methods: ("get" | "head")[],
         uri: "\/_workbench\/logout\/{guard?}",
-        action: ["Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController", "logout"],
      },
 } = {
-    name: "workbench.logout",
     href: (args: { guard: string }) => logout.definition.uri.replace(
         // TODO do not escape this with json_encode.
         /("guard"})/,
@@ -120,7 +109,6 @@ export const logout: {
     definition: {
         methods: ["get", "head"],
         uri: "\/_workbench\/logout\/{guard?}",
-        action: ["Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController", "logout"],
     },
 }
 
@@ -129,17 +117,14 @@ export const logout: {
  * @see "\/Users\/tim\/Code\/solder\/vendor\/orchestra\/workbench\/src\/Http\/Controllers\/WorkbenchController.php":40
  */
 export const user: {
-    name: "workbench.user",
     href: (args: { guard: string }) => string,
     get: (args: { guard: string }) => { action: string, method: "get", _method: "get" },
     head: (args: { guard: string }) => { action: string, method: "get", _method: "head" },
     definition: {
         methods: ("get" | "head")[],
         uri: "\/_workbench\/user\/{guard?}",
-        action: ["Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController", "user"],
      },
 } = {
-    name: "workbench.user",
     href: (args: { guard: string }) => user.definition.uri.replace(
         // TODO do not escape this with json_encode.
         /("guard"})/,
@@ -166,7 +151,6 @@ export const user: {
     definition: {
         methods: ["get", "head"],
         uri: "\/_workbench\/user\/{guard?}",
-        action: ["Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController", "user"],
     },
 }
 
