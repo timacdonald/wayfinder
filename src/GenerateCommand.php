@@ -7,13 +7,14 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Js;
 use ReflectionClass;
 
 use function Illuminate\Filesystem\join_paths;
 
 class GenerateCommand extends Command
 {
-    protected $signature = 'solder:generate';
+    protected $signature = 'solder:generate {--base=}';
 
     public function __construct(private Filesystem $files)
     {
@@ -55,25 +56,27 @@ class GenerateCommand extends Command
             ? ['__invoke', "\\{$route->getActionName()}::__invoke"]
             : [$route->getActionMethod(), "\\{$route->getControllerClass()}::{$route->getActionMethod()}"];
 
+        $e = json_encode(...);
+        $uri = "/{$route->uri}";
         $methods = collect($route->methods())->map(str(...))->map->lower();
         $parameters = collect($route->parameterNames())->map(str(...));
         $reflectionClass = new ReflectionClass($route->getControllerClass());
 
         $this->files->append($path, <<<JAVASCRIPT
             /**
-             * @see {$reference}
-             * @see {$reflectionClass->getFileName()}:{$reflectionClass->getMethod($function)->getStartLine()}
+             * @see {$e($reference)}
+             * @see {$e($reflectionClass->getFileName())}:{$e($reflectionClass->getMethod($function)->getStartLine())}
              */
             export const {$function}: {
-                name: {$this->formatRouteName($route)},
+                name: {$e($route->getName())},
                 href: ({$this->formatRouteParameters($parameters)}) => string,
                 {$methods->map(fn ($m) => <<<TYPESCRIPT
-                    {$m}: ({$this->formatRouteParameters($parameters)}) => { action: string, method: '{$this->formMethod($m)}', _method: '{$m}' },
+                    {$m}: ({$this->formatRouteParameters($parameters)}) => { action: string, method: {$e($this->formMethod($m))}, _method: {$e($m)} },
                     TYPESCRIPT)->join(PHP_EOL.'    ')}
                 definition: {
-                    methods: ({$methods->map(fn ($m) => "'{$m}'")->implode(' | ')})[],
-                    uri: '/{$route->uri}'
-                    action: ['{$route->getControllerClass()}', '{$function}'],
+                    methods: ({$methods->map(fn ($m) => $e($m))->implode(' | ')})[],
+                    uri: {$e($uri)},
+                    action: [{$e($route->getControllerClass())}, {$e($function)}],
                  },
             } = {
                 name: {$this->formatRouteName($route)},
@@ -81,14 +84,14 @@ class GenerateCommand extends Command
                 {$methods->map(fn ($m) => <<<TYPESCRIPT
                     {$m}: ({$this->formatRouteParameters($parameters)}) => ({
                             action: {$this->formatUrl($parameters, $function)},
-                            method: '{$this->formMethod($m)}',
-                            _method: '{$m}',
+                            method: {$e($this->formMethod($m))},
+                            _method: {$e($m)},
                         }),
                     TYPESCRIPT)->join(PHP_EOL.'    ')}
                 definition: {
-                    methods: [{$methods->map(fn ($m) => "'{$m}'")->join(', ')}],
-                    uri: '/{$route->uri}',
-                    action: ['{$route->getControllerClass()}', '{$function}'],
+                    methods: [{$methods->map(fn ($m) => $e($m))->join(', ')}],
+                    uri: {$e($uri)},
+                    action: [{$e($route->getControllerClass())}, {$e($function)}],
                 },
             }
 
@@ -98,11 +101,15 @@ class GenerateCommand extends Command
 
     private function formatRouteName(Route $route): string
     {
-        return $route->getName() === null ? 'null' : "'{$route->getName()}'";
+        $e = json_encode(...);
+
+        return $e($route->getName());
     }
 
     private function formatUrl(Collection $parameters, string $function): string
     {
+        $e = json_encode(...);
+
         if ($parameters->isEmpty()) {
             return <<<TYPESCRIPT
                 {$function}.definition.uri
@@ -111,8 +118,9 @@ class GenerateCommand extends Command
 
         return <<<TYPESCRIPT
             {$function}.definition.uri.replace(
-                    /{$parameters->map->wrap('(', ')')->implode(' | ')}/,
-                     (_: string, {$parameters->map(fn (string $name) => "{$name}: \"{$name}\"")->implode(', ')}) => args[{$parameters->implode('??')}]
+                    // TODO do not escape this with json_encode.
+                    /{$parameters->map(fn ($p) => "({$e($p)}})")->implode(' | ')}/,
+                     (_: string, {$parameters->map(fn (string $name) => "{$e($name)}: \"{$e($name)}\"")->implode(', ')}) => args[{$parameters->map(fn ($p) => $e($p))->implode(' ?? ')}]
                 )
             TYPESCRIPT;
     }
@@ -122,6 +130,8 @@ class GenerateCommand extends Command
         if ($parameters->isEmpty()) {
             return '';
         }
+
+        $e = json_encode(...);
 
         return <<<TYPESCRIPT
             args: { {$parameters->map(fn ($p) => "{$p}: string")->implode(', ')} }
@@ -157,7 +167,9 @@ class GenerateCommand extends Command
 
     private function base(): string
     {
-        return join_paths(resource_path(), 'js', 'actions');
+        $base = $this->option('base') ?? join_paths(resource_path(), 'js');
+
+        return join_paths($base, 'actions');
     }
 
     private function formMethod(string $method): string
