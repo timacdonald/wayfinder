@@ -33,25 +33,25 @@ export const index: {
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:12
  */
 export const show: {
-    href: (args: { post: string }) => string,
-    get: (args: { post: string }) => { action: string, method: "get", _method: "get" },
-    head: (args: { post: string }) => { action: string, method: "get", _method: "head" },
+    href: (args: { post: string|number }) => string,
+    get: (args: { post: string|number }) => { action: string, method: "get", _method: "get" },
+    head: (args: { post: string|number }) => { action: string, method: "get", _method: "head" },
     definition: {
         methods: ("get" | "head")[],
         uri: "\/posts\/{post}",
      },
 } = {
-    href: (args: { post: string }) => [
+    href: (args: { post: string|number }) => [
             "post"
         ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), show.definition.uri),
-    get: (args: { post: string }) => ({
+    get: (args: { post: string|number }) => ({
         action: [
             "post"
         ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), show.definition.uri),
         method: "get",
         _method: "get",
     }),
-    head: (args: { post: string }) => ({
+    head: (args: { post: string|number }) => ({
         action: [
             "post"
         ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), show.definition.uri),

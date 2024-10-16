@@ -128,7 +128,7 @@ class GenerateCommand extends Command
         $e = json_encode(...);
 
         return <<<TYPESCRIPT
-            args: { {$parameters->map(fn ($p) => "{$p}: string")->implode(', ')} }
+            args: { {$parameters->map(fn ($p) => "{$p}: string|number")->implode(', ')} }
             TYPESCRIPT;
     }
 
