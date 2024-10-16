@@ -8,5 +8,9 @@ class PostController
     {
         //
     }
-}
 
+    public function show()
+    {
+        //
+    }
+}

@@ -1,6 +1,6 @@
 /**
- * @see "\\Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController::start"
- * @see "\/Users\/tim\/Code\/solder\/vendor\/orchestra\/workbench\/src\/Http\/Controllers\/WorkbenchController.php":19
+ * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::start
+ * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:19
  */
 export const start: {
     href: () => string,
@@ -29,8 +29,8 @@ export const start: {
 }
 
 /**
- * @see "\\Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController::login"
- * @see "\/Users\/tim\/Code\/solder\/vendor\/orchestra\/workbench\/src\/Http\/Controllers\/WorkbenchController.php":61
+ * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::login
+ * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:61
  */
 export const login: {
     href: (args: { userId: string, guard: string }) => string,
@@ -41,26 +41,23 @@ export const login: {
         uri: "\/_workbench\/login\/{userId}\/{guard?}",
      },
 } = {
-    href: (args: { userId: string, guard: string }) => login.definition.uri.replace(
-        // TODO do not escape this with json_encode.
-        /("userId"}) | ("guard"})/,
-         (_: string, "userId": ""userId"", "guard": ""guard"") => args["userId" ?? "guard"]
-    ),
+    href: (args: { userId: string, guard: string }) => [
+            "userId",
+"guard"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), login.definition.uri),
     get: (args: { userId: string, guard: string }) => ({
-        action: login.definition.uri.replace(
-        // TODO do not escape this with json_encode.
-        /("userId"}) | ("guard"})/,
-         (_: string, "userId": ""userId"", "guard": ""guard"") => args["userId" ?? "guard"]
-    ),
+        action: [
+            "userId",
+"guard"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), login.definition.uri),
         method: "get",
         _method: "get",
     }),
     head: (args: { userId: string, guard: string }) => ({
-        action: login.definition.uri.replace(
-        // TODO do not escape this with json_encode.
-        /("userId"}) | ("guard"})/,
-         (_: string, "userId": ""userId"", "guard": ""guard"") => args["userId" ?? "guard"]
-    ),
+        action: [
+            "userId",
+"guard"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), login.definition.uri),
         method: "get",
         _method: "head",
     }),
@@ -71,8 +68,8 @@ export const login: {
 }
 
 /**
- * @see "\\Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController::logout"
- * @see "\/Users\/tim\/Code\/solder\/vendor\/orchestra\/workbench\/src\/Http\/Controllers\/WorkbenchController.php":85
+ * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::logout
+ * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:85
  */
 export const logout: {
     href: (args: { guard: string }) => string,
@@ -83,26 +80,20 @@ export const logout: {
         uri: "\/_workbench\/logout\/{guard?}",
      },
 } = {
-    href: (args: { guard: string }) => logout.definition.uri.replace(
-        // TODO do not escape this with json_encode.
-        /("guard"})/,
-         (_: string, "guard": ""guard"") => args["guard"]
-    ),
+    href: (args: { guard: string }) => [
+            "guard"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), logout.definition.uri),
     get: (args: { guard: string }) => ({
-        action: logout.definition.uri.replace(
-        // TODO do not escape this with json_encode.
-        /("guard"})/,
-         (_: string, "guard": ""guard"") => args["guard"]
-    ),
+        action: [
+            "guard"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), logout.definition.uri),
         method: "get",
         _method: "get",
     }),
     head: (args: { guard: string }) => ({
-        action: logout.definition.uri.replace(
-        // TODO do not escape this with json_encode.
-        /("guard"})/,
-         (_: string, "guard": ""guard"") => args["guard"]
-    ),
+        action: [
+            "guard"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), logout.definition.uri),
         method: "get",
         _method: "head",
     }),
@@ -113,8 +104,8 @@ export const logout: {
 }
 
 /**
- * @see "\\Orchestra\\Workbench\\Http\\Controllers\\WorkbenchController::user"
- * @see "\/Users\/tim\/Code\/solder\/vendor\/orchestra\/workbench\/src\/Http\/Controllers\/WorkbenchController.php":40
+ * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::user
+ * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:40
  */
 export const user: {
     href: (args: { guard: string }) => string,
@@ -125,26 +116,20 @@ export const user: {
         uri: "\/_workbench\/user\/{guard?}",
      },
 } = {
-    href: (args: { guard: string }) => user.definition.uri.replace(
-        // TODO do not escape this with json_encode.
-        /("guard"})/,
-         (_: string, "guard": ""guard"") => args["guard"]
-    ),
+    href: (args: { guard: string }) => [
+            "guard"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), user.definition.uri),
     get: (args: { guard: string }) => ({
-        action: user.definition.uri.replace(
-        // TODO do not escape this with json_encode.
-        /("guard"})/,
-         (_: string, "guard": ""guard"") => args["guard"]
-    ),
+        action: [
+            "guard"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), user.definition.uri),
         method: "get",
         _method: "get",
     }),
     head: (args: { guard: string }) => ({
-        action: user.definition.uri.replace(
-        // TODO do not escape this with json_encode.
-        /("guard"})/,
-         (_: string, "guard": ""guard"") => args["guard"]
-    ),
+        action: [
+            "guard"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), user.definition.uri),
         method: "get",
         _method: "head",
     }),

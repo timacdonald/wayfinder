@@ -64,8 +64,8 @@ class GenerateCommand extends Command
 
         $this->files->append($path, <<<JAVASCRIPT
             /**
-             * @see {$e($reference)}
-             * @see {$e($reflectionClass->getFileName())}:{$e($reflectionClass->getMethod($function)->getStartLine())}
+             * @see {$reference}
+             * @see {$reflectionClass->getFileName()}:{$reflectionClass->getMethod($function)->getStartLine()}
              */
             export const {$function}: {
                 href: ({$this->formatRouteParameters($parameters)}) => string,
@@ -113,11 +113,9 @@ class GenerateCommand extends Command
         }
 
         return <<<TYPESCRIPT
-            {$function}.definition.uri.replace(
-                    // TODO do not escape this with json_encode.
-                    /{$parameters->map(fn ($p) => "({$e($p)}})")->implode(' | ')}/,
-                     (_: string, {$parameters->map(fn (string $name) => "{$e($name)}: \"{$e($name)}\"")->implode(', ')}) => args[{$parameters->map(fn ($p) => $e($p))->implode(' ?? ')}]
-                )
+            [
+                        {$parameters->map(fn ($p) => $e($p))->implode(",\n")}
+                    ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), {$function}.definition.uri)
             TYPESCRIPT;
     }
 
