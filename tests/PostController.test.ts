@@ -33,8 +33,8 @@ describe('index', () => {
 
     test('definition', () => {
       expect(Object.keys(index.definition)).toEqual(['methods', 'uri'])
-      expect(index.definition.uri).toBe('/posts')
       expect(index.definition.methods).toEqual(['get', 'head'])
+      expect(index.definition.uri).toBe('/posts')
     })
 })
 
@@ -65,8 +65,8 @@ describe('show', () => {
 
     test('definition', () => {
       expect(Object.keys(show.definition)).toEqual(['methods', 'uri'])
-      expect(show.definition.uri).toBe('/posts/{post}')
       expect(show.definition.methods).toEqual(['get', 'head'])
+      expect(show.definition.uri).toBe('/posts/{post}')
     })
 
 })
@@ -90,8 +90,8 @@ describe('store', () => {
 
     test('definition', () => {
       expect(Object.keys(store.definition)).toEqual(['methods', 'uri'])
-      expect(store.definition.uri).toBe('/posts')
       expect(store.definition.methods).toEqual(['post'])
+      expect(store.definition.uri).toBe('/posts')
     })
 })
 
@@ -114,7 +114,7 @@ describe('update', () => {
 
     test('definition', () => {
       expect(Object.keys(update.definition)).toEqual(['methods', 'uri'])
-      expect(update.definition.uri).toBe('/posts/{post}')
       expect(update.definition.methods).toEqual(['patch'])
+      expect(update.definition.uri).toBe('/posts/{post}')
     })
 })
