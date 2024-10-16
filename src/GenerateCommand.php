@@ -74,10 +74,7 @@ class GenerateCommand extends Command
                 {$methods->map(fn ($m) => <<<TYPESCRIPT
                     {$m}: ({$this->formatRouteParameters($parameters)}) => { action: string, method: {$e($this->formMethod($m))}, _method: {$e($m)} },
                     TYPESCRIPT)->join(PHP_EOL.'    ')}
-                definition: {
-                    methods: ({$methods->map(fn ($m) => $e($m))->implode(' | ')})[],
-                    uri: {$e($uri)},
-                 },
+                definition: { methods: ({$methods->map(fn ($m) => $e($m))->implode(' | ')})[], uri: {$e($uri)} },
             } = {
                 href: ({$this->formatRouteParameters($parameters)}) => {$this->formatUrl($parameters, $function)},
                 {$methods->map(fn ($m) => <<<TYPESCRIPT

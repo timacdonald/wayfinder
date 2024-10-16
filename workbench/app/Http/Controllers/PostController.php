@@ -13,4 +13,14 @@ class PostController
     {
         //
     }
+
+    public function store()
+    {
+        //
+    }
+
+    public function update()
+    {
+        //
+    }
 }

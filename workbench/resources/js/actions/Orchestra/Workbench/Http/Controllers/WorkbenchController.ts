@@ -6,10 +6,7 @@ export const start: {
     href: () => string,
     get: () => { action: string, method: "get", _method: "get" },
     head: () => { action: string, method: "get", _method: "head" },
-    definition: {
-        methods: ("get" | "head")[],
-        uri: "\/_workbench",
-     },
+    definition: { methods: ("get" | "head")[], uri: "\/_workbench" },
 } = {
     href: () => start.definition.uri,
     get: () => ({
@@ -36,10 +33,7 @@ export const login: {
     href: (args: { userId: string|number, guard: string|number }) => string,
     get: (args: { userId: string|number, guard: string|number }) => { action: string, method: "get", _method: "get" },
     head: (args: { userId: string|number, guard: string|number }) => { action: string, method: "get", _method: "head" },
-    definition: {
-        methods: ("get" | "head")[],
-        uri: "\/_workbench\/login\/{userId}\/{guard?}",
-     },
+    definition: { methods: ("get" | "head")[], uri: "\/_workbench\/login\/{userId}\/{guard?}" },
 } = {
     href: (args: { userId: string|number, guard: string|number }) => [
             "userId",
@@ -75,10 +69,7 @@ export const logout: {
     href: (args: { guard: string|number }) => string,
     get: (args: { guard: string|number }) => { action: string, method: "get", _method: "get" },
     head: (args: { guard: string|number }) => { action: string, method: "get", _method: "head" },
-    definition: {
-        methods: ("get" | "head")[],
-        uri: "\/_workbench\/logout\/{guard?}",
-     },
+    definition: { methods: ("get" | "head")[], uri: "\/_workbench\/logout\/{guard?}" },
 } = {
     href: (args: { guard: string|number }) => [
             "guard"
@@ -111,10 +102,7 @@ export const user: {
     href: (args: { guard: string|number }) => string,
     get: (args: { guard: string|number }) => { action: string, method: "get", _method: "get" },
     head: (args: { guard: string|number }) => { action: string, method: "get", _method: "head" },
-    definition: {
-        methods: ("get" | "head")[],
-        uri: "\/_workbench\/user\/{guard?}",
-     },
+    definition: { methods: ("get" | "head")[], uri: "\/_workbench\/user\/{guard?}" },
 } = {
     href: (args: { guard: string|number }) => [
             "guard"
