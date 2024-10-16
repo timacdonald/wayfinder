@@ -26,8 +26,56 @@ export const index: {
 }
 
 /**
- * @see \App\Http\Controllers\PostController::show
+ * @see \App\Http\Controllers\PostController::create
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:12
+ */
+export const create: {
+    href: () => string,
+    get: () => { action: string, method: "get", _method: "get" },
+    head: () => { action: string, method: "get", _method: "head" },
+    definition: { methods: ("get" | "head")[], uri: "\/posts\/create" },
+} = {
+    href: () => create.definition.uri,
+    get: () => ({
+        action: create.definition.uri,
+        method: "get",
+        _method: "get",
+    }),
+    head: () => ({
+        action: create.definition.uri,
+        method: "get",
+        _method: "head",
+    }),
+    definition: {
+        methods: ["get", "head"],
+        uri: "\/posts\/create",
+    },
+}
+
+/**
+ * @see \App\Http\Controllers\PostController::store
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:17
+ */
+export const store: {
+    href: () => string,
+    post: () => { action: string, method: "post", _method: "post" },
+    definition: { methods: ("post")[], uri: "\/posts" },
+} = {
+    href: () => store.definition.uri,
+    post: () => ({
+        action: store.definition.uri,
+        method: "post",
+        _method: "post",
+    }),
+    definition: {
+        methods: ["post"],
+        uri: "\/posts",
+    },
+}
+
+/**
+ * @see \App\Http\Controllers\PostController::show
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:22
  */
 export const show: {
     href: (args: { post: string|number }) => string,
@@ -59,29 +107,8 @@ export const show: {
 }
 
 /**
- * @see \App\Http\Controllers\PostController::store
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:17
- */
-export const store: {
-    href: () => string,
-    post: () => { action: string, method: "post", _method: "post" },
-    definition: { methods: ("post")[], uri: "\/posts" },
-} = {
-    href: () => store.definition.uri,
-    post: () => ({
-        action: store.definition.uri,
-        method: "post",
-        _method: "post",
-    }),
-    definition: {
-        methods: ["post"],
-        uri: "\/posts",
-    },
-}
-
-/**
  * @see \App\Http\Controllers\PostController::update
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:22
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:27
  */
 export const update: {
     href: (args: { post: string|number }) => string,

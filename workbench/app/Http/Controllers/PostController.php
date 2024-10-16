@@ -9,12 +9,17 @@ class PostController
         //
     }
 
-    public function show()
+    public function create()
     {
         //
     }
 
     public function store()
+    {
+        //
+    }
+
+    public function show()
     {
         //
     }

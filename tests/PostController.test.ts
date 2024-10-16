@@ -1,6 +1,6 @@
 import { expect, test, describe, beforeAll } from 'vitest'
-import { index, show, store, update } from '../workbench/resources/js/actions/App/Http/Controllers/PostController'
-import {execSync} from 'node:child_process'
+import { execSync } from 'node:child_process'
+import { create, index, show, store, update } from '../workbench/resources/js/actions/App/Http/Controllers/PostController'
 
 beforeAll(() => {
     execSync('vendor/bin/testbench solder:generate --base=workbench/resources/js')
@@ -38,9 +38,65 @@ describe('index', () => {
     })
 })
 
+describe('create', () => {
+    test('properties', () => {
+      expect(Object.keys(create)).toEqual(['href', 'get', 'head', 'definition'])
+    })
+
+    test('href', () => {
+        expect(create.href()).toBe('/posts/create')
+    })
+
+    test('get', () => {
+        expect(create.get()).toEqual({
+            action: '/posts/create',
+            method: 'get',
+            _method: 'get'
+        })
+    })
+
+    test('head', () => {
+        expect(create.head()).toEqual({
+            action: '/posts/create',
+            method: 'get',
+            _method: 'head'
+        })
+    })
+
+    test('definition', () => {
+      expect(Object.keys(create.definition)).toEqual(['methods', 'uri'])
+      expect(create.definition.methods).toEqual(['get', 'head'])
+      expect(create.definition.uri).toBe('/posts/create')
+    })
+})
+
+describe('store', () => {
+    test('properties', () => {
+      expect(Object.keys(store)).toEqual(['href', 'post', 'definition'])
+    })
+
+    test('href', () => {
+        expect(store.href()).toBe('/posts')
+    })
+
+    test('post', () => {
+        expect(store.post()).toEqual({
+            action: '/posts',
+            method: 'post',
+            _method: 'post'
+        })
+    })
+
+    test('definition', () => {
+      expect(Object.keys(store.definition)).toEqual(['methods', 'uri'])
+      expect(store.definition.methods).toEqual(['post'])
+      expect(store.definition.uri).toBe('/posts')
+    })
+})
+
 describe('show', () => {
     test('properties', () => {
-      expect(Object.keys(index)).toEqual(['href', 'get', 'head', 'definition'])
+      expect(Object.keys(show)).toEqual(['href', 'get', 'head', 'definition'])
     })
 
     test('href', () => {
@@ -68,32 +124,9 @@ describe('show', () => {
       expect(show.definition.methods).toEqual(['get', 'head'])
       expect(show.definition.uri).toBe('/posts/{post}')
     })
-
 })
 
-describe('store', () => {
-    test('properties', () => {
-      expect(Object.keys(store)).toEqual(['href', 'post', 'definition'])
-    })
-
-    test('href', () => {
-        expect(store.href()).toBe('/posts')
-    })
-
-    test('post', () => {
-        expect(store.post()).toEqual({
-            action: '/posts',
-            method: 'post',
-            _method: 'post'
-        })
-    })
-
-    test('definition', () => {
-      expect(Object.keys(store.definition)).toEqual(['methods', 'uri'])
-      expect(store.definition.methods).toEqual(['post'])
-      expect(store.definition.uri).toBe('/posts')
-    })
-})
+// edit
 
 describe('update', () => {
     test('properties', () => {
@@ -118,3 +151,5 @@ describe('update', () => {
       expect(update.definition.uri).toBe('/posts/{post}')
     })
 })
+
+// destroy
