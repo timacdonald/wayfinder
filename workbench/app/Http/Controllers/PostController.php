@@ -33,4 +33,9 @@ class PostController
     {
         //
     }
+
+    public function destroy()
+    {
+        //
+    }
 }

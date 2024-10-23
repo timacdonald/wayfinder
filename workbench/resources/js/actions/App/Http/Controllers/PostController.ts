@@ -85,18 +85,18 @@ export const show: {
 } = {
     href: (args: { post: string|number }) => [
             "post"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), show.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), show.definition.uri),
     get: (args: { post: string|number }) => ({
         action: [
             "post"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), show.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), show.definition.uri),
         method: "get",
         _method: "get",
     }),
     head: (args: { post: string|number }) => ({
         action: [
             "post"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), show.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), show.definition.uri),
         method: "get",
         _method: "head",
     }),
@@ -118,18 +118,18 @@ export const edit: {
 } = {
     href: (args: { post: string|number }) => [
             "post"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), edit.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), edit.definition.uri),
     get: (args: { post: string|number }) => ({
         action: [
             "post"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), edit.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), edit.definition.uri),
         method: "get",
         _method: "get",
     }),
     head: (args: { post: string|number }) => ({
         action: [
             "post"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), edit.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), edit.definition.uri),
         method: "get",
         _method: "head",
     }),
@@ -150,16 +150,41 @@ export const update: {
 } = {
     href: (args: { post: string|number }) => [
             "post"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), update.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), update.definition.uri),
     patch: (args: { post: string|number }) => ({
         action: [
             "post"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), update.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), update.definition.uri),
         method: "post",
         _method: "patch",
     }),
     definition: {
         methods: ["patch"],
+        uri: "\/posts\/{post}",
+    },
+}
+
+/**
+ * @see \App\Http\Controllers\PostController::destroy
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:37
+ */
+export const destroy: {
+    href: (args: { post: string|number }) => string,
+    delete: (args: { post: string|number }) => { action: string, method: "post", _method: "delete" },
+    definition: { methods: ("delete")[], uri: "\/posts\/{post}" },
+} = {
+    href: (args: { post: string|number }) => [
+            "post"
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), destroy.definition.uri),
+    delete: (args: { post: string|number }) => ({
+        action: [
+            "post"
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), destroy.definition.uri),
+        method: "post",
+        _method: "delete",
+    }),
+    definition: {
+        methods: ["delete"],
         uri: "\/posts\/{post}",
     },
 }

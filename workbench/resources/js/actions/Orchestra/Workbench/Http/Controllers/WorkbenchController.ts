@@ -38,12 +38,12 @@ export const login: {
     href: (args: { userId: string|number, guard: string|number }) => [
             "userId",
 "guard"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), login.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), login.definition.uri),
     get: (args: { userId: string|number, guard: string|number }) => ({
         action: [
             "userId",
 "guard"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), login.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), login.definition.uri),
         method: "get",
         _method: "get",
     }),
@@ -51,7 +51,7 @@ export const login: {
         action: [
             "userId",
 "guard"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), login.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), login.definition.uri),
         method: "get",
         _method: "head",
     }),
@@ -73,18 +73,18 @@ export const logout: {
 } = {
     href: (args: { guard: string|number }) => [
             "guard"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), logout.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), logout.definition.uri),
     get: (args: { guard: string|number }) => ({
         action: [
             "guard"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), logout.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), logout.definition.uri),
         method: "get",
         _method: "get",
     }),
     head: (args: { guard: string|number }) => ({
         action: [
             "guard"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), logout.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), logout.definition.uri),
         method: "get",
         _method: "head",
     }),
@@ -106,18 +106,18 @@ export const user: {
 } = {
     href: (args: { guard: string|number }) => [
             "guard"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), user.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), user.definition.uri),
     get: (args: { guard: string|number }) => ({
         action: [
             "guard"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), user.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), user.definition.uri),
         method: "get",
         _method: "get",
     }),
     head: (args: { guard: string|number }) => ({
         action: [
             "guard"
-        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), user.definition.uri),
+        ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), user.definition.uri),
         method: "get",
         _method: "head",
     }),

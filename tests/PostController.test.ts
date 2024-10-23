@@ -1,12 +1,15 @@
 import { expect, test, describe, beforeAll } from 'vitest'
 import { execSync } from 'node:child_process'
-import { create, edit, index, show, store, update } from '../workbench/resources/js/actions/App/Http/Controllers/PostController'
 
-beforeAll(() => {
+const postControllerPath = '../workbench/resources/js/actions/App/Http/Controllers/PostController'
+
+beforeAll(async () => {
     execSync('vendor/bin/testbench solder:generate --base=workbench/resources/js')
 })
 
-describe('index', () => {
+describe('index', async () => {
+    const { index } = await import(postControllerPath)
+
     test('properties', () => {
       expect(Object.keys(index)).toEqual(['href', 'get', 'head', 'definition'])
     })
@@ -38,7 +41,9 @@ describe('index', () => {
     })
 })
 
-describe('create', () => {
+describe('create', async () => {
+    const { create } = await import(postControllerPath)
+
     test('properties', () => {
       expect(Object.keys(create)).toEqual(['href', 'get', 'head', 'definition'])
     })
@@ -70,7 +75,9 @@ describe('create', () => {
     })
 })
 
-describe('store', () => {
+describe('store', async () => {
+    const { store } = await import(postControllerPath)
+
     test('properties', () => {
       expect(Object.keys(store)).toEqual(['href', 'post', 'definition'])
     })
@@ -94,7 +101,9 @@ describe('store', () => {
     })
 })
 
-describe('show', () => {
+describe('show', async () => {
+    const { show } = await import('../workbench/resources/js/actions/App/Http/Controllers/PostController')
+
     test('properties', () => {
       expect(Object.keys(show)).toEqual(['href', 'get', 'head', 'definition'])
     })
@@ -126,7 +135,9 @@ describe('show', () => {
     })
 })
 
-describe('edit', () => {
+describe('edit', async () => {
+    const { edit } = await import(postControllerPath)
+
     test('properties', () => {
       expect(Object.keys(edit)).toEqual(['href', 'get', 'head', 'definition'])
     })
@@ -135,11 +146,19 @@ describe('edit', () => {
         expect(edit.href({ post: 1 })).toBe('/posts/1/edit')
     })
 
-    test('patch', () => {
+    test('get', () => {
         expect(edit.get({ post: 1 })).toEqual({
             action: '/posts/1/edit',
             method: 'get',
             _method: 'get'
+        })
+    })
+
+    test('head', () => {
+        expect(edit.head({ post: 1 })).toEqual({
+            action: '/posts/1/edit',
+            method: 'get',
+            _method: 'head'
         })
     })
 
@@ -150,7 +169,9 @@ describe('edit', () => {
     })
 })
 
-describe('update', () => {
+describe('update', async () => {
+    const { update } = await import(postControllerPath)
+
     test('properties', () => {
       expect(Object.keys(update)).toEqual(['href', 'patch', 'definition'])
     })
@@ -174,4 +195,28 @@ describe('update', () => {
     })
 })
 
-// destroy
+describe('destroy', async () => {
+    const { destroy } = await import(postControllerPath)
+
+    test('properties', () => {
+      expect(Object.keys(destroy)).toEqual(['href', 'delete', 'definition'])
+    })
+
+    test('href', () => {
+        expect(destroy.href({ post: 1 })).toBe('/posts/1')
+    })
+
+    test('delete', () => {
+        expect(destroy.delete({ post: 1 })).toEqual({
+            action: '/posts/1',
+            method: 'post',
+            _method: 'delete'
+        })
+    })
+
+    test('definition', () => {
+      expect(Object.keys(destroy.definition)).toEqual(['methods', 'uri'])
+      expect(destroy.definition.methods).toEqual(['delete'])
+      expect(destroy.definition.uri).toBe('/posts/{post}')
+    })
+})

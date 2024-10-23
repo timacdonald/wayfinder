@@ -114,7 +114,7 @@ class GenerateCommand extends Command
         return <<<TYPESCRIPT
             [
                         {$parameters->map(fn ($p) => $e($p))->implode(",\n")}
-                    ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), {$function}.definition.uri)
+                    ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), {$function}.definition.uri)
             TYPESCRIPT;
     }
 
