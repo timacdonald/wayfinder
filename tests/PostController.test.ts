@@ -1,15 +1,7 @@
-import { expect, test, describe, beforeAll } from 'vitest'
-import { execSync } from 'node:child_process'
-
-const postControllerPath = '../workbench/resources/js/actions/App/Http/Controllers/PostController'
-
-beforeAll(async () => {
-    execSync('vendor/bin/testbench solder:generate --base=workbench/resources/js')
-})
+import { expect, test, describe } from 'vitest'
+import { index, create, store, show, edit, update, destroy } from '../workbench/resources/js/actions/App/Http/Controllers/PostController'
 
 describe('index', async () => {
-    const { index } = await import(postControllerPath)
-
     test('properties', () => {
       expect(Object.keys(index)).toEqual(['href', 'get', 'head', 'definition'])
     })
@@ -42,8 +34,6 @@ describe('index', async () => {
 })
 
 describe('create', async () => {
-    const { create } = await import(postControllerPath)
-
     test('properties', () => {
       expect(Object.keys(create)).toEqual(['href', 'get', 'head', 'definition'])
     })
@@ -76,8 +66,6 @@ describe('create', async () => {
 })
 
 describe('store', async () => {
-    const { store } = await import(postControllerPath)
-
     test('properties', () => {
       expect(Object.keys(store)).toEqual(['href', 'post', 'definition'])
     })
@@ -102,8 +90,6 @@ describe('store', async () => {
 })
 
 describe('show', async () => {
-    const { show } = await import('../workbench/resources/js/actions/App/Http/Controllers/PostController')
-
     test('properties', () => {
       expect(Object.keys(show)).toEqual(['href', 'get', 'head', 'definition'])
     })
@@ -136,8 +122,6 @@ describe('show', async () => {
 })
 
 describe('edit', async () => {
-    const { edit } = await import(postControllerPath)
-
     test('properties', () => {
       expect(Object.keys(edit)).toEqual(['href', 'get', 'head', 'definition'])
     })
@@ -170,8 +154,6 @@ describe('edit', async () => {
 })
 
 describe('update', async () => {
-    const { update } = await import(postControllerPath)
-
     test('properties', () => {
       expect(Object.keys(update)).toEqual(['href', 'patch', 'definition'])
     })
@@ -196,8 +178,6 @@ describe('update', async () => {
 })
 
 describe('destroy', async () => {
-    const { destroy } = await import(postControllerPath)
-
     test('properties', () => {
       expect(Object.keys(destroy)).toEqual(['href', 'delete', 'definition'])
     })

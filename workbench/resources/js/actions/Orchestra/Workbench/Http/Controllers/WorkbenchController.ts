@@ -30,16 +30,21 @@ export const start: {
  * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:61
  */
 export const login: {
-    href: (args: { userId: string|number, guard: string|number }) => string,
-    get: (args: { userId: string|number, guard: string|number }) => { action: string, method: "get", _method: "get" },
-    head: (args: { userId: string|number, guard: string|number }) => { action: string, method: "get", _method: "head" },
+    href: (args: { userId: string|number, guard?: string|number }
+) => string,
+    get: (args: { userId: string|number, guard?: string|number }
+) => { action: string, method: "get", _method: "get" },
+    head: (args: { userId: string|number, guard?: string|number }
+) => { action: string, method: "get", _method: "head" },
     definition: { methods: ("get" | "head")[], uri: "\/_workbench\/login\/{userId}\/{guard?}" },
 } = {
-    href: (args: { userId: string|number, guard: string|number }) => [
+    href: (args: { userId: string|number, guard?: string|number }
+) => [
             "userId",
 "guard"
         ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), login.definition.uri),
-    get: (args: { userId: string|number, guard: string|number }) => ({
+    get: (args: { userId: string|number, guard?: string|number }
+) => ({
         action: [
             "userId",
 "guard"
@@ -47,7 +52,8 @@ export const login: {
         method: "get",
         _method: "get",
     }),
-    head: (args: { userId: string|number, guard: string|number }) => ({
+    head: (args: { userId: string|number, guard?: string|number }
+) => ({
         action: [
             "userId",
 "guard"
@@ -66,22 +72,28 @@ export const login: {
  * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:85
  */
 export const logout: {
-    href: (args: { guard: string|number }) => string,
-    get: (args: { guard: string|number }) => { action: string, method: "get", _method: "get" },
-    head: (args: { guard: string|number }) => { action: string, method: "get", _method: "head" },
+    href: (args?: { guard?: string|number }
+) => string,
+    get: (args?: { guard?: string|number }
+) => { action: string, method: "get", _method: "get" },
+    head: (args?: { guard?: string|number }
+) => { action: string, method: "get", _method: "head" },
     definition: { methods: ("get" | "head")[], uri: "\/_workbench\/logout\/{guard?}" },
 } = {
-    href: (args: { guard: string|number }) => [
+    href: (args?: { guard?: string|number }
+) => [
             "guard"
         ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), logout.definition.uri),
-    get: (args: { guard: string|number }) => ({
+    get: (args?: { guard?: string|number }
+) => ({
         action: [
             "guard"
         ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), logout.definition.uri),
         method: "get",
         _method: "get",
     }),
-    head: (args: { guard: string|number }) => ({
+    head: (args?: { guard?: string|number }
+) => ({
         action: [
             "guard"
         ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), logout.definition.uri),
@@ -99,22 +111,28 @@ export const logout: {
  * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:40
  */
 export const user: {
-    href: (args: { guard: string|number }) => string,
-    get: (args: { guard: string|number }) => { action: string, method: "get", _method: "get" },
-    head: (args: { guard: string|number }) => { action: string, method: "get", _method: "head" },
+    href: (args?: { guard?: string|number }
+) => string,
+    get: (args?: { guard?: string|number }
+) => { action: string, method: "get", _method: "get" },
+    head: (args?: { guard?: string|number }
+) => { action: string, method: "get", _method: "head" },
     definition: { methods: ("get" | "head")[], uri: "\/_workbench\/user\/{guard?}" },
 } = {
-    href: (args: { guard: string|number }) => [
+    href: (args?: { guard?: string|number }
+) => [
             "guard"
         ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), user.definition.uri),
-    get: (args: { guard: string|number }) => ({
+    get: (args?: { guard?: string|number }
+) => ({
         action: [
             "guard"
         ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), user.definition.uri),
         method: "get",
         _method: "get",
     }),
-    head: (args: { guard: string|number }) => ({
+    head: (args?: { guard?: string|number }
+) => ({
         action: [
             "guard"
         ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), user.definition.uri),

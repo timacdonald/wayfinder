@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,5 +14,8 @@ Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
 Route::patch('/posts/{post}', [PostController::class, 'update']);
 Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
+Route::post('/optional/{parameter?}', [Controller::class, 'optional']);
+
 // Route::put();
 // Route::resource();
+// __invoke

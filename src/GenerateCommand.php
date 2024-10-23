@@ -61,7 +61,8 @@ class GenerateCommand extends Command
         $e = json_encode(...);
         $uri = "/{$route->uri}";
         $methods = collect($route->methods())->map(str(...))->map->lower();
-        $parameters = collect($route->parameterNames())->map(str(...));
+        $parameters = collect($route->parameterNames());
+        $optionalParameters = collect($route->toSymfonyRoute()->getDefaults());
         $reflectionClass = new ReflectionClass($route->getControllerClass());
 
         $this->files->append($path, <<<JAVASCRIPT
@@ -70,15 +71,15 @@ class GenerateCommand extends Command
              * @see {$reflectionClass->getFileName()}:{$reflectionClass->getMethod($function)->getStartLine()}
              */
             export const {$function}: {
-                href: ({$this->formatRouteParameters($parameters)}) => string,
+                href: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => string,
                 {$methods->map(fn ($m) => <<<TYPESCRIPT
-                    {$m}: ({$this->formatRouteParameters($parameters)}) => { action: string, method: {$e($this->formMethod($m))}, _method: {$e($m)} },
+                    {$m}: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => { action: string, method: {$e($this->formMethod($m))}, _method: {$e($m)} },
                     TYPESCRIPT)->join(PHP_EOL.'    ')}
                 definition: { methods: ({$methods->map(fn ($m) => $e($m))->implode(' | ')})[], uri: {$e($uri)} },
             } = {
-                href: ({$this->formatRouteParameters($parameters)}) => {$this->formatUrl($parameters, $function)},
+                href: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => {$this->formatUrl($parameters, $function)},
                 {$methods->map(fn ($m) => <<<TYPESCRIPT
-                    {$m}: ({$this->formatRouteParameters($parameters)}) => ({
+                    {$m}: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => ({
                             action: {$this->formatUrl($parameters, $function)},
                             method: {$e($this->formMethod($m))},
                             _method: {$e($m)},
@@ -118,7 +119,7 @@ class GenerateCommand extends Command
             TYPESCRIPT;
     }
 
-    private function formatRouteParameters(Collection $parameters): string
+    private function formatRouteParameters(Collection $parameters, Collection $optional): string
     {
         if ($parameters->isEmpty()) {
             return '';
@@ -126,8 +127,13 @@ class GenerateCommand extends Command
 
         $e = json_encode(...);
 
+        $argsFlag = $optional->has($parameters->all())
+            ? '?'
+            : '';
+
         return <<<TYPESCRIPT
-            args: { {$parameters->map(fn ($p) => "{$p}: string|number")->implode(', ')} }
+            args{$argsFlag}: { {$parameters->map(fn ($p) => $p.($optional->has((string) $p) ? '?' : '').': string|number')->implode(', ')} }
+
             TYPESCRIPT;
     }
 
