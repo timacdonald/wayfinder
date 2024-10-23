@@ -1,6 +1,6 @@
 /**
- * @see \App\Http\Controllers\Controller::optional
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/Controller.php:7
+ * @see \App\Http\Controllers\OptionalController::optional
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/OptionalController.php:7
  */
 export const optional: {
     href: (args?: { parameter?: string|number }) => string,
@@ -20,8 +20,8 @@ export const optional: {
 }
 
 /**
- * @see \App\Http\Controllers\Controller::manyOptional
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/Controller.php:12
+ * @see \App\Http\Controllers\OptionalController::manyOptional
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/OptionalController.php:12
  */
 export const manyOptional: {
     href: (args?: { one?: string|number, two?: string|number, three?: string|number }) => string,

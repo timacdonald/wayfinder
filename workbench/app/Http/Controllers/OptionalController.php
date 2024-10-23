@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class Controller
+class OptionalController
 {
     public function optional()
     {

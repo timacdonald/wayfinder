@@ -1,2 +1,2 @@
 export * as PostController from "./Controllers/PostController"
-export * as Controller from "./Controllers/Controller"
+export * as OptionalController from "./Controllers/OptionalController"

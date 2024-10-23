@@ -1,5 +1,5 @@
 import { expect, test, describe } from 'vitest'
-import {optional, manyOptional } from '../workbench/resources/js/actions/App/Http/Controllers/Controller'
+import {optional, manyOptional } from '../workbench/resources/js/actions/App/Http/Controllers/OptionalController'
 
 describe('optional', async () => {
     test('properties', () => {
