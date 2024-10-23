@@ -3,11 +3,11 @@ import { index, create, store, show, edit, update, destroy } from '../workbench/
 
 describe('index', async () => {
     test('properties', () => {
-      expect(Object.keys(index)).toEqual(['href', 'get', 'head', 'definition'])
+      expect(Object.keys(index)).toEqual(['url', 'get', 'head', 'definition'])
     })
 
-    test('href', () => {
-        expect(index.href()).toBe('/posts')
+    test('url', () => {
+        expect(index.url()).toBe('/posts')
     })
 
     test('get', () => {
@@ -35,11 +35,11 @@ describe('index', async () => {
 
 describe('create', async () => {
     test('properties', () => {
-      expect(Object.keys(create)).toEqual(['href', 'get', 'head', 'definition'])
+      expect(Object.keys(create)).toEqual(['url', 'get', 'head', 'definition'])
     })
 
-    test('href', () => {
-        expect(create.href()).toBe('/posts/create')
+    test('url', () => {
+        expect(create.url()).toBe('/posts/create')
     })
 
     test('get', () => {
@@ -67,11 +67,11 @@ describe('create', async () => {
 
 describe('store', async () => {
     test('properties', () => {
-      expect(Object.keys(store)).toEqual(['href', 'post', 'definition'])
+      expect(Object.keys(store)).toEqual(['url', 'post', 'definition'])
     })
 
-    test('href', () => {
-        expect(store.href()).toBe('/posts')
+    test('url', () => {
+        expect(store.url()).toBe('/posts')
     })
 
     test('post', () => {
@@ -91,11 +91,11 @@ describe('store', async () => {
 
 describe('show', async () => {
     test('properties', () => {
-      expect(Object.keys(show)).toEqual(['href', 'get', 'head', 'definition'])
+      expect(Object.keys(show)).toEqual(['url', 'get', 'head', 'definition'])
     })
 
-    test('href', () => {
-        expect(show.href({ post: 1 })).toBe('/posts/1')
+    test('url', () => {
+        expect(show.url({ post: 1 })).toBe('/posts/1')
     })
 
     test('get', () => {
@@ -123,11 +123,11 @@ describe('show', async () => {
 
 describe('edit', async () => {
     test('properties', () => {
-      expect(Object.keys(edit)).toEqual(['href', 'get', 'head', 'definition'])
+      expect(Object.keys(edit)).toEqual(['url', 'get', 'head', 'definition'])
     })
 
-    test('href', () => {
-        expect(edit.href({ post: 1 })).toBe('/posts/1/edit')
+    test('url', () => {
+        expect(edit.url({ post: 1 })).toBe('/posts/1/edit')
     })
 
     test('get', () => {
@@ -155,11 +155,11 @@ describe('edit', async () => {
 
 describe('update', async () => {
     test('properties', () => {
-      expect(Object.keys(update)).toEqual(['href', 'patch', 'definition'])
+      expect(Object.keys(update)).toEqual(['url', 'patch', 'definition'])
     })
 
-    test('href', () => {
-        expect(update.href({ post: 1 })).toBe('/posts/1')
+    test('url', () => {
+        expect(update.url({ post: 1 })).toBe('/posts/1')
     })
 
     test('patch', () => {
@@ -179,11 +179,11 @@ describe('update', async () => {
 
 describe('destroy', async () => {
     test('properties', () => {
-      expect(Object.keys(destroy)).toEqual(['href', 'delete', 'definition'])
+      expect(Object.keys(destroy)).toEqual(['url', 'delete', 'definition'])
     })
 
-    test('href', () => {
-        expect(destroy.href({ post: 1 })).toBe('/posts/1')
+    test('url', () => {
+        expect(destroy.url({ post: 1 })).toBe('/posts/1')
     })
 
     test('delete', () => {

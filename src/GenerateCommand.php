@@ -3,10 +3,12 @@
 namespace TiMacDonald\Solder;
 
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Js;
 use ReflectionClass;
 
@@ -34,6 +36,9 @@ class GenerateCommand extends Command
      */
     public function handle(Router $router)
     {
+        View::addNamespace('solder', __DIR__.'/../resources');
+        View::addExtension('blade.ts', 'blade');
+
         $this->files->deleteDirectory($this->base());
 
         $controllers = collect($router->getRoutes())
@@ -54,45 +59,70 @@ class GenerateCommand extends Command
 
     private function writeControllerMethodExport(Route $route, string $path): void
     {
-        [$function, $reference] = $route->getActionName() === $route->getActionMethod()
-            ? ['__invoke', "\\{$route->getActionName()}::__invoke"]
-            : [$route->getActionMethod(), "\\{$route->getControllerClass()}::{$route->getActionMethod()}"];
+        [$method, $controller] = $route->getActionName() === $route->getActionMethod()
+            ? ['__invoke', "\\{$route->getActionName()}"]
+            : [$route->getActionMethod(), "\\{$route->getControllerClass()}"];
 
         $e = json_encode(...);
         $uri = "/{$route->uri}";
         $methods = collect($route->methods())->map(str(...))->map->lower();
-        $parameters = collect($route->parameterNames());
         $optionalParameters = collect($route->toSymfonyRoute()->getDefaults());
-        $reflectionClass = new ReflectionClass($route->getControllerClass());
-
-        $this->files->append($path, <<<JAVASCRIPT
-            /**
-             * @see {$reference}
-             * @see {$reflectionClass->getFileName()}:{$reflectionClass->getMethod($function)->getStartLine()}
-             */
-            export const {$function}: {
-                href: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => string,
-                {$methods->map(fn ($m) => <<<TYPESCRIPT
-                    {$m}: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => { action: string, method: {$e($this->formMethod($m))}, _method: {$e($m)} },
-                    TYPESCRIPT)->join(PHP_EOL.'    ')}
-                definition: { methods: ({$methods->map(fn ($m) => $e($m))->implode(' | ')})[], uri: {$e($uri)} },
-            } = {
-                href: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => {$this->formatUrl($parameters, $optionalParameters, $function)},
-                {$methods->map(fn ($m) => <<<TYPESCRIPT
-                    {$m}: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => ({
-                            action: {$this->formatUrl($parameters, $optionalParameters, $function)},
-                            method: {$e($this->formMethod($m))},
-                            _method: {$e($m)},
-                        }),
-                    TYPESCRIPT)->join(PHP_EOL.'    ')}
-                definition: {
-                    methods: [{$methods->map(fn ($m) => $e($m))->join(', ')}],
-                    uri: {$e($uri)},
-                },
+        $parameters = collect($route->parameterNames())->map(fn ($name) => new class($name, $optionalParameters->has($name)) implements Htmlable
+        {
+            public function __construct(public string $name, public bool $optional)
+            {
+                //
             }
 
+            public function toHtml()
+            {
+                return $this->name;
+            }
+        });
+        $verbs = collect($route->methods())->map(strtolower(...))->map(fn ($verb) => new class($verb, $this->formMethod($verb))
+        {
+            public function __construct(public string $actual, public string $formSafe)
+            {
+                //
+            }
+        });
 
-            JAVASCRIPT);
+        $reflectionClass = new ReflectionClass($route->getControllerClass());
+
+        $content = View::make('solder::method', [
+            'controller' => $controller,
+            'method' => $method,
+            'path' => $reflectionClass->getFileName(),
+            'line' => $reflectionClass->getStartLine(),
+            'parameters' => $parameters,
+            'verbs' => $verbs,
+        ]);
+
+        file_put_contents('output.ts', $content);
+
+        // $this->files->append($path, <<<JAVASCRIPT
+        //     export const {$method}: {
+        //         url: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => string,
+        //         {$methods->map(fn ($m) => <<<TYPESCRIPT
+        //             {$m}: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => { action: string, method: {$e($this->formMethod($m))}, _method: {$e($m)} },
+        //             TYPESCRIPT)->join(PHP_EOL.'    ')}
+        //         definition: { methods: ({$methods->map(fn ($m) => $e($m))->implode(' | ')})[], uri: {$e($uri)} },
+        //     } = {
+        //         url: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => {$this->formatUrl($parameters, $optionalParameters, $method)},
+        //         {$methods->map(fn ($m) => <<<TYPESCRIPT
+        //             {$m}: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => ({
+        //                     action: {$this->formatUrl($parameters, $optionalParameters, $method)},
+        //                     method: {$e($this->formMethod($m))},
+        //                     _method: {$e($m)},
+        //                 }),
+        //             TYPESCRIPT)->join(PHP_EOL.'    ')}
+        //         definition: {
+        //             methods: [{$methods->map(fn ($m) => $e($m))->join(', ')}],
+        //             uri: {$e($uri)},
+        //         },
+        //     }
+
+        // //     JAVASCRIPT);
     }
 
     private function formatUrl(Collection $parameters, Collection $optional, string $function): string
@@ -133,13 +163,13 @@ class GenerateCommand extends Command
 
     private function formatRouteParameters(Collection $parameters, Collection $optional): string
     {
-        if ($parameters->isEmpty()) {
-            return '';
-        }
+        // if ($parameters->isEmpty()) {
+        //     return '';
+        // }
 
-        return <<<TYPESCRIPT
-            args{$this->formatArgsFlag($parameters, $optional)}: { {$parameters->map(fn ($p) => $p.($optional->has((string) $p) ? '?' : '').': string|number')->implode(', ')} }
-            TYPESCRIPT;
+        // return <<<TYPESCRIPT
+        //     args{$this->formatArgsFlag($parameters, $optional)}: { {$parameters->map(fn ($p) => $p.($optional->has((string) $p) ? '?' : '').': string|number')->implode(', ')} }
+        //     TYPESCRIPT;
     }
 
     private function formatArgsFlag(Collection $parameters, Collection $optional): string
