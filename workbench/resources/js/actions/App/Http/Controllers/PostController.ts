@@ -107,8 +107,41 @@ export const show: {
 }
 
 /**
- * @see \App\Http\Controllers\PostController::update
+ * @see \App\Http\Controllers\PostController::edit
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:27
+ */
+export const edit: {
+    href: (args: { post: string|number }) => string,
+    get: (args: { post: string|number }) => { action: string, method: "get", _method: "get" },
+    head: (args: { post: string|number }) => { action: string, method: "get", _method: "head" },
+    definition: { methods: ("get" | "head")[], uri: "\/posts\/{post}\/edit" },
+} = {
+    href: (args: { post: string|number }) => [
+            "post"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), edit.definition.uri),
+    get: (args: { post: string|number }) => ({
+        action: [
+            "post"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), edit.definition.uri),
+        method: "get",
+        _method: "get",
+    }),
+    head: (args: { post: string|number }) => ({
+        action: [
+            "post"
+        ].reduce((url, parameter) => url.replace('{'+parameter+'}', args[parameter]), edit.definition.uri),
+        method: "get",
+        _method: "head",
+    }),
+    definition: {
+        methods: ["get", "head"],
+        uri: "\/posts\/{post}\/edit",
+    },
+}
+
+/**
+ * @see \App\Http\Controllers\PostController::update
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:32
  */
 export const update: {
     href: (args: { post: string|number }) => string,

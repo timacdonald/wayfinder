@@ -24,6 +24,11 @@ class PostController
         //
     }
 
+    public function edit()
+    {
+        //
+    }
+
     public function update()
     {
         //

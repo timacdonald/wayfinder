@@ -1,6 +1,6 @@
 import { expect, test, describe, beforeAll } from 'vitest'
 import { execSync } from 'node:child_process'
-import { create, index, show, store, update } from '../workbench/resources/js/actions/App/Http/Controllers/PostController'
+import { create, edit, index, show, store, update } from '../workbench/resources/js/actions/App/Http/Controllers/PostController'
 
 beforeAll(() => {
     execSync('vendor/bin/testbench solder:generate --base=workbench/resources/js')
@@ -126,7 +126,29 @@ describe('show', () => {
     })
 })
 
-// edit
+describe('edit', () => {
+    test('properties', () => {
+      expect(Object.keys(edit)).toEqual(['href', 'get', 'head', 'definition'])
+    })
+
+    test('href', () => {
+        expect(edit.href({ post: 1 })).toBe('/posts/1/edit')
+    })
+
+    test('patch', () => {
+        expect(edit.get({ post: 1 })).toEqual({
+            action: '/posts/1/edit',
+            method: 'get',
+            _method: 'get'
+        })
+    })
+
+    test('definition', () => {
+      expect(Object.keys(edit.definition)).toEqual(['methods', 'uri'])
+      expect(edit.definition.methods).toEqual(['get', 'head'])
+      expect(edit.definition.uri).toBe('/posts/{post}/edit')
+    })
+})
 
 describe('update', () => {
     test('properties', () => {
