@@ -15,7 +15,12 @@ Route::patch('/posts/{post}', [PostController::class, 'update']);
 Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
 Route::post('/optional/{parameter?}', [Controller::class, 'optional']);
+Route::post('/many-optional/{one?}/{two?}/{three?}', [Controller::class, 'manyOptional']);
 
 // Route::put();
 // Route::resource();
 // __invoke
+// domain
+//
+// {parameter_name}
+// {parameter-name}

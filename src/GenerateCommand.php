@@ -77,10 +77,10 @@ class GenerateCommand extends Command
                     TYPESCRIPT)->join(PHP_EOL.'    ')}
                 definition: { methods: ({$methods->map(fn ($m) => $e($m))->implode(' | ')})[], uri: {$e($uri)} },
             } = {
-                href: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => {$this->formatUrl($parameters, $function)},
+                href: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => {$this->formatUrl($parameters, $optionalParameters, $function)},
                 {$methods->map(fn ($m) => <<<TYPESCRIPT
                     {$m}: ({$this->formatRouteParameters($parameters, $optionalParameters)}) => ({
-                            action: {$this->formatUrl($parameters, $function)},
+                            action: {$this->formatUrl($parameters, $optionalParameters, $function)},
                             method: {$e($this->formMethod($m))},
                             _method: {$e($m)},
                         }),
@@ -95,28 +95,40 @@ class GenerateCommand extends Command
             JAVASCRIPT);
     }
 
-    private function formatRouteName(Route $route): string
+    private function formatUrl(Collection $parameters, Collection $optional, string $function): string
     {
-        $e = json_encode(...);
-
-        return $e($route->getName());
+        return <<<TYPESCRIPT
+            {$function}.definition.uri{$parameters->map(fn ($p) => $this->formatUrlParameter($p, $optional))->implode('')}.replace(/\/+$/, '')
+            TYPESCRIPT;
     }
 
-    private function formatUrl(Collection $parameters, string $function): string
+    private function formatUrlParameter(string $parameter, Collection $optionalParameters): string
     {
         $e = json_encode(...);
 
-        if ($parameters->isEmpty()) {
-            return <<<TYPESCRIPT
-                {$function}.definition.uri
-                TYPESCRIPT;
-        }
+        $optional = $optionalParameters->has($parameter);
+
+        $optionalFlag = $optional ? '?.' : '';
+
+        $optionalToStringFlag = $optional ? '?' : '';
 
         return <<<TYPESCRIPT
-            [
-                        {$parameters->map(fn ($p) => $e($p))->implode(",\n")}
-                    ].reduce((url, parameter) => url.replace("{" + parameter + "}", args[parameter]), {$function}.definition.uri)
-            TYPESCRIPT;
+        .replace({$e($this->formatParamterPlaceholder($parameter, $optional))}, (args{$optionalFlag}[{$e($parameter)}]{$optionalToStringFlag}.toString(){$this->formatOptionalFallback($parameter, $optional)}))
+        TYPESCRIPT;
+    }
+
+    private function formatOptionalFallback(string $parameter, bool $optional): string
+    {
+        $e = json_encode(...);
+
+        return $optional
+            ? " ?? ''"
+            : '';
+    }
+
+    private function formatParamterPlaceholder(string $parameter, bool $optional): string
+    {
+        return '{'.$parameter.($optional ? '?' : '').'}';
     }
 
     private function formatRouteParameters(Collection $parameters, Collection $optional): string
@@ -125,16 +137,14 @@ class GenerateCommand extends Command
             return '';
         }
 
-        $e = json_encode(...);
-
-        $argsFlag = $optional->has($parameters->all())
-            ? '?'
-            : '';
-
         return <<<TYPESCRIPT
-            args{$argsFlag}: { {$parameters->map(fn ($p) => $p.($optional->has((string) $p) ? '?' : '').': string|number')->implode(', ')} }
-
+            args{$this->formatArgsFlag($parameters, $optional)}: { {$parameters->map(fn ($p) => $p.($optional->has((string) $p) ? '?' : '').': string|number')->implode(', ')} }
             TYPESCRIPT;
+    }
+
+    private function formatArgsFlag(Collection $parameters, Collection $optional): string
+    {
+        return $optional->has($parameters->all()) ? '?' : '';
     }
 
     private function writeBarrelFiles(array|Collection $children, string $parent): void

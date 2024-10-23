@@ -8,4 +8,9 @@ class Controller
     {
         //
     }
+
+    public function manyOptional()
+    {
+        //
+    }
 }
