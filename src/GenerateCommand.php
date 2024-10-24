@@ -62,21 +62,27 @@ class GenerateCommand extends Command
         [$method, $controller] = $route->getActionName() === $route->getActionMethod()
             ? ['__invoke', "\\{$route->getActionName()}"]
             : [$route->getActionMethod(), "\\{$route->getControllerClass()}"];
-
         $e = json_encode(...);
         $uri = "/{$route->uri}";
         $methods = collect($route->methods())->map(str(...))->map->lower();
         $optionalParameters = collect($route->toSymfonyRoute()->getDefaults());
         $parameters = collect($route->parameterNames())->map(fn ($name) => new class($name, $optionalParameters->has($name)) implements Htmlable
         {
+            public string $placeholder;
+
             public function __construct(public string $name, public bool $optional)
             {
-                //
+                $this->placeholder = $optional ? "{{$name}?}" : "{{$name}}";
             }
 
             public function toHtml()
             {
                 return $this->name;
+            }
+
+            public function __toString()
+            {
+                return $this->toHtml();
             }
         });
         $verbs = collect($route->methods())->map(strtolower(...))->map(fn ($verb) => new class($verb, $this->formMethod($verb))
@@ -96,6 +102,7 @@ class GenerateCommand extends Command
             'line' => $reflectionClass->getStartLine(),
             'parameters' => $parameters,
             'verbs' => $verbs,
+            'uri' => $route->uri(),
         ]);
 
         file_put_contents('output.ts', $content);

@@ -14,6 +14,20 @@ export const manyOptional: {
         three?: string|number,
     }) => {
         action: string,
-        method: "post",
-        _method: "post",
+        method: 'post',
+        _method: 'post',
     },
+    definition: {
+        methods: ('post')[],
+        uri: 'many-optional\/{one?}\/{two?}\/{three?}',
+    },
+} = {
+    url: (args) => manyOptional.definition.uri
+        .replace('{one?}', args?.['one']?.toString() ?? '')
+        .replace('{two?}', args?.['two']?.toString() ?? '')
+        .replace('{three?}', args?.['three']?.toString() ?? '')
+        .replace(/\/+$/, ''),
+    post: () => {
+
+    },
+}
