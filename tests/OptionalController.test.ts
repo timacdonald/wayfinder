@@ -3,7 +3,7 @@ import {optional, manyOptional } from '../workbench/resources/js/actions/App/Htt
 
 describe('optional', async () => {
     test('properties', () => {
-      expect(Object.keys(optional)).toEqual(['url', 'post', 'definition'])
+      expect(Object.keys(optional)).toEqual(['definition', 'url', 'post'])
     })
 
     test('url', () => {
@@ -34,7 +34,7 @@ describe('optional', async () => {
 
 describe('manyOptional', async () => {
     test('properties', () => {
-      expect(Object.keys(manyOptional)).toEqual(['url', 'post', 'definition'])
+      expect(Object.keys(manyOptional)).toEqual(['definition', 'url', 'post'])
     })
 
     test('url', () => {

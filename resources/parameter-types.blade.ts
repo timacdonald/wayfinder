@@ -1,1 +1,1 @@
-{{ $parameter }}@if($parameter->optional)?@endif: string|number,
+{{ $parameter->name }}@if($parameter->optional)?@endif: string|number,
