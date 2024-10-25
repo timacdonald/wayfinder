@@ -21,7 +21,6 @@ describe('manyOptional', async () => {
     })
 
     it('throws an error when passing optional parameters with missing optional parameters before', () => {
-        // TODO: can this throw an exception or be typed away?
         expect(() => manyOptional.url({ two: '2' })).toThrow()
         expect(() => manyOptional.url({ three: '3' })).toThrow()
         expect(() => manyOptional.url({ two: '2', three: '3' })).toThrow()

@@ -4,7 +4,7 @@ const validateParameters = (args: Record<string, unknown>|undefined, optional: s
 
     for (let i = 0; i < missing.length; i++) {
         if (missing[i] !== expectedMissing[i]) {
-            throw Error('whoops')
+            throw Error('Unexpected optional parameters missing. Unable to generate a URL.')
         }
     }
 }
