@@ -1,3 +1,14 @@
+const validateParameters = (args: Record<string, unknown>|undefined, optional: string[]) => {
+    const missing = optional.filter((key) => ! args?.[key])
+    const expectedMissing = optional.slice(missing.length * -1)
+
+    for (let i = 0; i < missing.length; i++) {
+        if (missing[i] !== expectedMissing[i]) {
+            throw Error('whoops')
+        }
+    }
+}
+
 /**
  * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::start
  * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:12
@@ -23,7 +34,9 @@ export const start: {
         methods: ['get','head'],
         uri: '\/_workbench',
     },
-    url: () => start.definition.uri,
+    url: () => {
+        return start.definition.uri
+    },
     get: () => ({
         action: start.url(),
         method: 'get',
@@ -69,10 +82,16 @@ export const login: {
         methods: ['get','head'],
         uri: '\/_workbench\/login\/{userId}\/{guard?}',
     },
-    url: (args) => login.definition.uri
-        .replace('{userId}', args['userId'].toString())
-        .replace('{guard?}', args['guard']?.toString() ?? '')
-        .replace(/\/+$/, ''),
+    url: (args) => {
+        validateParameters(args, [
+            "guard",
+        ])
+
+        return login.definition.uri
+            .replace('{userId}', args['userId'].toString())
+            .replace('{guard?}', args['guard']?.toString() ?? '')
+            .replace(/\/+$/, '')
+    },
     get: (args) => ({
         action: login.url(args),
         method: 'get',
@@ -115,9 +134,15 @@ export const logout: {
         methods: ['get','head'],
         uri: '\/_workbench\/logout\/{guard?}',
     },
-    url: (args) => logout.definition.uri
-        .replace('{guard?}', args?.['guard']?.toString() ?? '')
-        .replace(/\/+$/, ''),
+    url: (args) => {
+        validateParameters(args, [
+            "guard",
+        ])
+
+        return logout.definition.uri
+            .replace('{guard?}', args?.['guard']?.toString() ?? '')
+            .replace(/\/+$/, '')
+    },
     get: (args) => ({
         action: logout.url(args),
         method: 'get',
@@ -160,9 +185,15 @@ export const user: {
         methods: ['get','head'],
         uri: '\/_workbench\/user\/{guard?}',
     },
-    url: (args) => user.definition.uri
-        .replace('{guard?}', args?.['guard']?.toString() ?? '')
-        .replace(/\/+$/, ''),
+    url: (args) => {
+        validateParameters(args, [
+            "guard",
+        ])
+
+        return user.definition.uri
+            .replace('{guard?}', args?.['guard']?.toString() ?? '')
+            .replace(/\/+$/, '')
+    },
     get: (args) => ({
         action: user.url(args),
         method: 'get',

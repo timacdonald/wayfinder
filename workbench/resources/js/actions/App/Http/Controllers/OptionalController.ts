@@ -1,3 +1,14 @@
+const validateParameters = (args: Record<string, unknown>|undefined, optional: string[]) => {
+    const missing = optional.filter((key) => ! args?.[key])
+    const expectedMissing = optional.slice(missing.length * -1)
+
+    for (let i = 0; i < missing.length; i++) {
+        if (missing[i] !== expectedMissing[i]) {
+            throw Error('whoops')
+        }
+    }
+}
+
 /**
  * @see \App\Http\Controllers\OptionalController::optional
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/OptionalController.php:5
@@ -22,9 +33,15 @@ export const optional: {
         methods: ['post'],
         uri: '\/optional\/{parameter?}',
     },
-    url: (args) => optional.definition.uri
-        .replace('{parameter?}', args?.['parameter']?.toString() ?? '')
-        .replace(/\/+$/, ''),
+    url: (args) => {
+        validateParameters(args, [
+            "parameter",
+        ])
+
+        return optional.definition.uri
+            .replace('{parameter?}', args?.['parameter']?.toString() ?? '')
+            .replace(/\/+$/, '')
+    },
     post: (args) => ({
         action: optional.url(args),
         method: 'post',
@@ -59,11 +76,19 @@ export const manyOptional: {
         methods: ['post'],
         uri: '\/many-optional\/{one?}\/{two?}\/{three?}',
     },
-    url: (args) => manyOptional.definition.uri
-        .replace('{one?}', args?.['one']?.toString() ?? '')
-        .replace('{two?}', args?.['two']?.toString() ?? '')
-        .replace('{three?}', args?.['three']?.toString() ?? '')
-        .replace(/\/+$/, ''),
+    url: (args) => {
+        validateParameters(args, [
+            "one",
+            "two",
+            "three",
+        ])
+
+        return manyOptional.definition.uri
+            .replace('{one?}', args?.['one']?.toString() ?? '')
+            .replace('{two?}', args?.['two']?.toString() ?? '')
+            .replace('{three?}', args?.['three']?.toString() ?? '')
+            .replace(/\/+$/, '')
+    },
     post: (args) => ({
         action: manyOptional.url(args),
         method: 'post',

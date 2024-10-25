@@ -56,6 +56,10 @@ class GenerateCommand extends Command
     {
         $path = join_paths($this->base(), ...explode('.', $namespace)).'.ts';
 
+        $content = $this->view->make('solder::validate-parameters')->render();
+
+        $this->files->append($path, $content);
+
         $routes->each(fn (Route $route) => $this->writeControllerMethodExport($route, $path));
     }
 

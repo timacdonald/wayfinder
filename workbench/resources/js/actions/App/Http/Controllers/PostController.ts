@@ -1,3 +1,14 @@
+const validateParameters = (args: Record<string, unknown>|undefined, optional: string[]) => {
+    const missing = optional.filter((key) => ! args?.[key])
+    const expectedMissing = optional.slice(missing.length * -1)
+
+    for (let i = 0; i < missing.length; i++) {
+        if (missing[i] !== expectedMissing[i]) {
+            throw Error('whoops')
+        }
+    }
+}
+
 /**
  * @see \App\Http\Controllers\PostController::index
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:5
@@ -23,7 +34,9 @@ export const index: {
         methods: ['get','head'],
         uri: '\/posts',
     },
-    url: () => index.definition.uri,
+    url: () => {
+        return index.definition.uri
+    },
     get: () => ({
         action: index.url(),
         method: 'get',
@@ -60,7 +73,9 @@ export const create: {
         methods: ['get','head'],
         uri: '\/posts\/create',
     },
-    url: () => create.definition.uri,
+    url: () => {
+        return create.definition.uri
+    },
     get: () => ({
         action: create.url(),
         method: 'get',
@@ -92,7 +107,9 @@ export const store: {
         methods: ['post'],
         uri: '\/posts',
     },
-    url: () => store.definition.uri,
+    url: () => {
+        return store.definition.uri
+    },
     post: () => ({
         action: store.url(),
         method: 'post',
@@ -130,9 +147,14 @@ export const show: {
         methods: ['get','head'],
         uri: '\/posts\/{post}',
     },
-    url: (args) => show.definition.uri
-        .replace('{post}', args['post'].toString())
-        .replace(/\/+$/, ''),
+    url: (args) => {
+        validateParameters(args, [
+        ])
+
+        return show.definition.uri
+            .replace('{post}', args['post'].toString())
+            .replace(/\/+$/, '')
+    },
     get: (args) => ({
         action: show.url(args),
         method: 'get',
@@ -175,9 +197,14 @@ export const edit: {
         methods: ['get','head'],
         uri: '\/posts\/{post}\/edit',
     },
-    url: (args) => edit.definition.uri
-        .replace('{post}', args['post'].toString())
-        .replace(/\/+$/, ''),
+    url: (args) => {
+        validateParameters(args, [
+        ])
+
+        return edit.definition.uri
+            .replace('{post}', args['post'].toString())
+            .replace(/\/+$/, '')
+    },
     get: (args) => ({
         action: edit.url(args),
         method: 'get',
@@ -213,9 +240,14 @@ export const update: {
         methods: ['patch'],
         uri: '\/posts\/{post}',
     },
-    url: (args) => update.definition.uri
-        .replace('{post}', args['post'].toString())
-        .replace(/\/+$/, ''),
+    url: (args) => {
+        validateParameters(args, [
+        ])
+
+        return update.definition.uri
+            .replace('{post}', args['post'].toString())
+            .replace(/\/+$/, '')
+    },
     patch: (args) => ({
         action: update.url(args),
         method: 'post',
@@ -246,9 +278,14 @@ export const destroy: {
         methods: ['delete'],
         uri: '\/posts\/{post}',
     },
-    url: (args) => destroy.definition.uri
-        .replace('{post}', args['post'].toString())
-        .replace(/\/+$/, ''),
+    url: (args) => {
+        validateParameters(args, [
+        ])
+
+        return destroy.definition.uri
+            .replace('{post}', args['post'].toString())
+            .replace(/\/+$/, '')
+    },
     delete: (args) => ({
         action: destroy.url(args),
         method: 'post',

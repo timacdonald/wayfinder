@@ -1,4 +1,4 @@
-import { expect, test, describe } from 'vitest'
+import { expect, test, describe, it } from 'vitest'
 import {optional, manyOptional } from '../workbench/resources/js/actions/App/Http/Controllers/OptionalController'
 
 describe('optional', async () => {
@@ -18,11 +18,17 @@ describe('manyOptional', async () => {
         expect(manyOptional.url({ one: '1' })).toBe('/many-optional/1')
         expect(manyOptional.url({ one: '1', two: '2' })).toBe('/many-optional/1/2')
         expect(manyOptional.url({ one: '1', two: '2', three: '3' })).toBe('/many-optional/1/2/3')
+    })
+
+    it('throws an error when passing optional parameters with missing optional parameters before', () => {
         // TODO: can this throw an exception or be typed away?
-        expect(manyOptional.url({ three: '3' })).toBe('/many-optional///3')
+        expect(() => manyOptional.url({ two: '2' })).toThrow()
+        expect(() => manyOptional.url({ three: '3' })).toThrow()
+        expect(() => manyOptional.url({ two: '2', three: '3' })).toThrow()
     })
 
     test('definition', () => {
       expect(manyOptional.definition.uri).toBe('/many-optional/{one?}/{two?}/{three?}')
     })
 })
+

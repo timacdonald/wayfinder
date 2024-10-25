@@ -15,7 +15,7 @@ export const {!! $method !!}: {
 @foreach($verbs as $verb)
     {!! $verb->actual !!}: (@if($parameters->isNotEmpty()){!! 'args' !!}{!! when($parameters->every->optional, '?') !!}: {
 @foreach($parameters as $parameter)
-        @include('solder::parameter-types')
+        {{ $parameter->name }}@if($parameter->optional)?@endif: string|number,
 @endforeach
     }@endif) => {
         action: string,
@@ -28,13 +28,23 @@ export const {!! $method !!}: {
         methods: [@foreach($verbs as $verb)@js($verb->actual){!! when(! $loop->last, ',') !!}@endforeach],
         uri: @js($uri),
     },
-    url: ({!! when($parameters->isNotEmpty(), 'args') !!}) => {!! $method !!}.definition.uri{!! when($parameters->isEmpty(), ',') !!}
+    url: ({!! when($parameters->isNotEmpty(), 'args') !!}) => {
+@if($parameters->isNotEmpty())
+        validateParameters(args, [
+@foreach($parameters->where('optional') as $parameter)
+            "{!! $parameter->name !!}",
+@endforeach
+        ])
+
+@endif
+        return {!! $method !!}.definition.uri
 @foreach($parameters as $parameter)
-        .replace(@js($parameter->placeholder), args{!! when($parameters->every->optional, '?.') !!}[@js($parameter->name)]{!! when($parameter->optional, '?') !!}.toString(){!! when($parameter->optional, " ?? ''") !!})
+            .replace(@js($parameter->placeholder), args{!! when($parameters->every->optional, '?.') !!}[@js($parameter->name)]{!! when($parameter->optional, '?') !!}.toString(){!! when($parameter->optional, " ?? ''") !!})
 @if($loop->last)
-        .replace(/\/+$/, ''),
+            .replace(/\/+$/, '')
 @endif
 @endforeach
+    },
 @foreach($verbs as $verb)
     {!! $verb->actual !!}: ({!! when($parameters->isNotEmpty(), 'args') !!}) => ({
         action: {!! $method !!}.url({!! when($parameters->isNotEmpty(), 'args') !!}),
