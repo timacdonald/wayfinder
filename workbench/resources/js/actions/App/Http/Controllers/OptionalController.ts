@@ -11,7 +11,7 @@ const validateParameters = (args: Record<string, unknown>|undefined, optional: s
 
 /**
  * @see \App\Http\Controllers\OptionalController::optional
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/OptionalController.php:5
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/OptionalController.php:7
  */
 export const optional: {
     definition: {
@@ -19,10 +19,10 @@ export const optional: {
         uri: '\/optional\/{parameter?}',
     },
     url: (args?: {
-        parameter?: string|number,
+        parameter?: string|number|{ id: string|number },
     }) => string,
     post: (args?: {
-        parameter?: string|number,
+        parameter?: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'post',
@@ -38,6 +38,12 @@ export const optional: {
             "parameter",
         ])
 
+        const parsedArgs = {
+            parameter: typeof args?.['parameter'] === 'object'
+                ? args['parameter']['foo']
+                : args?.['parameter'],
+        }
+
         return optional.definition.uri
             .replace('{parameter?}', args?.['parameter']?.toString() ?? '')
             .replace(/\/+$/, '')
@@ -50,7 +56,7 @@ export const optional: {
 }
 /**
  * @see \App\Http\Controllers\OptionalController::manyOptional
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/OptionalController.php:5
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/OptionalController.php:12
  */
 export const manyOptional: {
     definition: {
@@ -58,14 +64,14 @@ export const manyOptional: {
         uri: '\/many-optional\/{one?}\/{two?}\/{three?}',
     },
     url: (args?: {
-        one?: string|number,
-        two?: string|number,
-        three?: string|number,
+        one?: string|number|{ id: string|number },
+        two?: string|number|{ id: string|number },
+        three?: string|number|{ id: string|number },
     }) => string,
     post: (args?: {
-        one?: string|number,
-        two?: string|number,
-        three?: string|number,
+        one?: string|number|{ id: string|number },
+        two?: string|number|{ id: string|number },
+        three?: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'post',
@@ -82,6 +88,18 @@ export const manyOptional: {
             "two",
             "three",
         ])
+
+        const parsedArgs = {
+            one: typeof args?.['one'] === 'object'
+                ? args['one']['foo']
+                : args?.['one'],
+            two: typeof args?.['two'] === 'object'
+                ? args['two']['foo']
+                : args?.['two'],
+            three: typeof args?.['three'] === 'object'
+                ? args['three']['foo']
+                : args?.['three'],
+        }
 
         return manyOptional.definition.uri
             .replace('{one?}', args?.['one']?.toString() ?? '')

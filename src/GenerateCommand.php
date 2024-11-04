@@ -4,12 +4,10 @@ namespace TiMacDonald\Solder;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Js;
 use Illuminate\View\Factory;
-use ReflectionClass;
 
 use function Illuminate\Filesystem\join_paths;
 
@@ -35,6 +33,7 @@ class GenerateCommand extends Command
      * todo opt in/out of method and _method?
      * todo: provide @see file link and line number.
      * todo: wrap everything in JS::from ?
+     * todo: handle invokable controllers mixed with other methods.
      */
     public function handle()
     {
@@ -44,8 +43,9 @@ class GenerateCommand extends Command
         $this->files->deleteDirectory($this->base());
 
         $controllers = collect($this->router->getRoutes())
-            ->filter(fn (Route $route) => $route->getControllerClass())
-            ->groupBy(fn (Route $route) => str_replace('\\', '.', $route->getControllerClass()));
+            ->mapInto(Route::class)
+            ->filter(fn (Route $route) => $route->hasController())
+            ->groupBy(fn (Route $route) => $route->dotNamespace());
 
         $controllers->undot()->each($this->writeBarrelFiles(...));
 
@@ -56,38 +56,28 @@ class GenerateCommand extends Command
     {
         $path = join_paths($this->base(), ...explode('.', $namespace)).'.ts';
 
-        $content = $this->view->make('solder::validate-parameters')->render();
+        // do not add this unless any method needs it.
+        if ($routes->contains(fn (Route $route) => $route->parameters()->contains(fn (Parameter $parameter) => $parameter->optional))) {
+            $content = $this->view->make('solder::validate-parameters')->render();
 
-        $this->files->append($path, $content);
+            $this->files->append($path, $content);
+        }
 
         $routes->each(fn (Route $route) => $this->writeControllerMethodExport($route, $path));
     }
 
     private function writeControllerMethodExport(Route $route, string $path): void
     {
-        [$method, $controller] = $route->getActionName() === $route->getActionMethod()
-            ? ['__invoke', "\\{$route->getActionName()}"]
-            : [$route->getActionMethod(), "\\{$route->getControllerClass()}"];
 
-        $reflectionClass = new ReflectionClass($route->getControllerClass());
-
-        $optionalParameters = collect($route->toSymfonyRoute()->getDefaults());
-
-        $parameters = collect($route->parameterNames())->map(fn ($name) => new Parameter($name, $optionalParameters->has($name)));
-
-        $verbs = collect($route->methods())->mapInto(Verb::class);
-
-        $content = $this->view->make('solder::method', [
-            'controller' => $controller,
-            'method' => $method,
-            'path' => $reflectionClass->getFileName(),
-            'line' => $reflectionClass->getStartLine(),
-            'parameters' => $parameters,
-            'verbs' => $verbs,
-            'uri' => "/{$route->uri}",
-        ])->render();
-
-        $this->files->append($path, $content);
+        $this->files->append($path, $this->view->make('solder::method', [
+            'controller' => $route->controller(),
+            'method' => $route->method(),
+            'path' => $route->controllerPath(),
+            'line' => $route->controllerMethodLineNumber(),
+            'parameters' => $route->parameters(),
+            'verbs' => $route->verbs(),
+            'uri' => $route->uri(),
+        ]));
     }
 
     private function writeBarrelFiles(array|Collection $children, string $parent): void

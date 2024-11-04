@@ -1,17 +1,6 @@
-const validateParameters = (args: Record<string, unknown>|undefined, optional: string[]) => {
-    const missing = optional.filter((key) => ! args?.[key])
-    const expectedMissing = optional.slice(missing.length * -1)
-
-    for (let i = 0; i < missing.length; i++) {
-        if (missing[i] !== expectedMissing[i]) {
-            throw Error('Unexpected optional parameters missing. Unable to generate a URL.')
-        }
-    }
-}
-
 /**
  * @see \App\Http\Controllers\PostController::index
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:5
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:7
  */
 export const index: {
     definition: {
@@ -50,7 +39,7 @@ export const index: {
 }
 /**
  * @see \App\Http\Controllers\PostController::create
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:5
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:12
  */
 export const create: {
     definition: {
@@ -89,7 +78,7 @@ export const create: {
 }
 /**
  * @see \App\Http\Controllers\PostController::store
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:5
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:17
  */
 export const store: {
     definition: {
@@ -118,7 +107,7 @@ export const store: {
 }
 /**
  * @see \App\Http\Controllers\PostController::show
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:5
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:22
  */
 export const show: {
     definition: {
@@ -126,17 +115,17 @@ export const show: {
         uri: '\/posts\/{post}',
     },
     url: (args: {
-        post: string|number,
+        post: string|number|{ id: string|number },
     }) => string,
     get: (args: {
-        post: string|number,
+        post: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'get',
         _method: 'get',
     },
     head: (args: {
-        post: string|number,
+        post: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'get',
@@ -148,9 +137,6 @@ export const show: {
         uri: '\/posts\/{post}',
     },
     url: (args) => {
-        validateParameters(args, [
-        ])
-
         return show.definition.uri
             .replace('{post}', args['post'].toString())
             .replace(/\/+$/, '')
@@ -168,7 +154,7 @@ export const show: {
 }
 /**
  * @see \App\Http\Controllers\PostController::edit
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:5
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:27
  */
 export const edit: {
     definition: {
@@ -176,17 +162,17 @@ export const edit: {
         uri: '\/posts\/{post}\/edit',
     },
     url: (args: {
-        post: string|number,
+        post: string|number|{ id: string|number },
     }) => string,
     get: (args: {
-        post: string|number,
+        post: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'get',
         _method: 'get',
     },
     head: (args: {
-        post: string|number,
+        post: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'get',
@@ -198,9 +184,6 @@ export const edit: {
         uri: '\/posts\/{post}\/edit',
     },
     url: (args) => {
-        validateParameters(args, [
-        ])
-
         return edit.definition.uri
             .replace('{post}', args['post'].toString())
             .replace(/\/+$/, '')
@@ -218,7 +201,7 @@ export const edit: {
 }
 /**
  * @see \App\Http\Controllers\PostController::update
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:5
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:32
  */
 export const update: {
     definition: {
@@ -226,10 +209,10 @@ export const update: {
         uri: '\/posts\/{post}',
     },
     url: (args: {
-        post: string|number,
+        post: string|number|{ id: string|number },
     }) => string,
     patch: (args: {
-        post: string|number,
+        post: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'post',
@@ -241,9 +224,6 @@ export const update: {
         uri: '\/posts\/{post}',
     },
     url: (args) => {
-        validateParameters(args, [
-        ])
-
         return update.definition.uri
             .replace('{post}', args['post'].toString())
             .replace(/\/+$/, '')
@@ -256,7 +236,7 @@ export const update: {
 }
 /**
  * @see \App\Http\Controllers\PostController::destroy
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:5
+ * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:37
  */
 export const destroy: {
     definition: {
@@ -264,10 +244,10 @@ export const destroy: {
         uri: '\/posts\/{post}',
     },
     url: (args: {
-        post: string|number,
+        post: string|number|{ id: string|number },
     }) => string,
     delete: (args: {
-        post: string|number,
+        post: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'post',
@@ -279,9 +259,6 @@ export const destroy: {
         uri: '\/posts\/{post}',
     },
     url: (args) => {
-        validateParameters(args, [
-        ])
-
         return destroy.definition.uri
             .replace('{post}', args['post'].toString())
             .replace(/\/+$/, '')

@@ -11,7 +11,7 @@ const validateParameters = (args: Record<string, unknown>|undefined, optional: s
 
 /**
  * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::start
- * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:12
+ * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:19
  */
 export const start: {
     definition: {
@@ -50,7 +50,7 @@ export const start: {
 }
 /**
  * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::login
- * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:12
+ * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:61
  */
 export const login: {
     definition: {
@@ -58,20 +58,20 @@ export const login: {
         uri: '\/_workbench\/login\/{userId}\/{guard?}',
     },
     url: (args: {
-        userId: string|number,
-        guard?: string|number,
+        userId: string|number|{ id: string|number },
+        guard?: string|number|{ id: string|number },
     }) => string,
     get: (args: {
-        userId: string|number,
-        guard?: string|number,
+        userId: string|number|{ id: string|number },
+        guard?: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'get',
         _method: 'get',
     },
     head: (args: {
-        userId: string|number,
-        guard?: string|number,
+        userId: string|number|{ id: string|number },
+        guard?: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'get',
@@ -86,6 +86,15 @@ export const login: {
         validateParameters(args, [
             "guard",
         ])
+
+        const parsedArgs = {
+            userId: typeof args['userId'] === 'object'
+                ? args['userId']['foo']
+                : args['userId'],
+            guard: typeof args['guard'] === 'object'
+                ? args['guard']['foo']
+                : args['guard'],
+        }
 
         return login.definition.uri
             .replace('{userId}', args['userId'].toString())
@@ -105,7 +114,7 @@ export const login: {
 }
 /**
  * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::logout
- * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:12
+ * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:85
  */
 export const logout: {
     definition: {
@@ -113,17 +122,17 @@ export const logout: {
         uri: '\/_workbench\/logout\/{guard?}',
     },
     url: (args?: {
-        guard?: string|number,
+        guard?: string|number|{ id: string|number },
     }) => string,
     get: (args?: {
-        guard?: string|number,
+        guard?: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'get',
         _method: 'get',
     },
     head: (args?: {
-        guard?: string|number,
+        guard?: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'get',
@@ -138,6 +147,12 @@ export const logout: {
         validateParameters(args, [
             "guard",
         ])
+
+        const parsedArgs = {
+            guard: typeof args?.['guard'] === 'object'
+                ? args['guard']['foo']
+                : args?.['guard'],
+        }
 
         return logout.definition.uri
             .replace('{guard?}', args?.['guard']?.toString() ?? '')
@@ -156,7 +171,7 @@ export const logout: {
 }
 /**
  * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::user
- * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:12
+ * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:40
  */
 export const user: {
     definition: {
@@ -164,17 +179,17 @@ export const user: {
         uri: '\/_workbench\/user\/{guard?}',
     },
     url: (args?: {
-        guard?: string|number,
+        guard?: string|number|{ id: string|number },
     }) => string,
     get: (args?: {
-        guard?: string|number,
+        guard?: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'get',
         _method: 'get',
     },
     head: (args?: {
-        guard?: string|number,
+        guard?: string|number|{ id: string|number },
     }) => {
         action: string,
         method: 'get',
@@ -189,6 +204,12 @@ export const user: {
         validateParameters(args, [
             "guard",
         ])
+
+        const parsedArgs = {
+            guard: typeof args?.['guard'] === 'object'
+                ? args['guard']['foo']
+                : args?.['guard'],
+        }
 
         return user.definition.uri
             .replace('{guard?}', args?.['guard']?.toString() ?? '')
