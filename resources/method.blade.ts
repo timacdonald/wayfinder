@@ -36,18 +36,20 @@ export const {!! $method !!}: {
 @endforeach
         ])
 
+@endif
+@if($parameters->isNotEmpty())
         const parsedArgs = {
 @foreach($parameters as $parameter)
-            {!! $parameter->name !!}: typeof args{!! when($parameters->every->optional, '?.') !!}['{!! $parameter->name !!}'] === 'object'
-                ? args['{!! $parameter->name !!}']['foo']
-                : args{!! when($parameters->every->optional, '?.') !!}['{!! $parameter->name !!}'],
+            {!! $parameter->name !!}: typeof args{!! when($parameters->every->optional, '?') !!}.{!! $parameter->name !!} === 'object'
+                ? args.{!! $parameter->name !!}.{!! $parameter->key !!}
+                : args{!! when($parameters->every->optional, '?') !!}.{!! $parameter->name !!},
 @endforeach
         }
 
 @endif
         return {!! $method !!}.definition.uri
 @foreach($parameters as $parameter)
-            .replace(@js($parameter->placeholder), args{!! when($parameters->every->optional, '?.') !!}[@js($parameter->name)]{!! when($parameter->optional, '?') !!}.toString(){!! when($parameter->optional, " ?? ''") !!})
+            .replace(@js($parameter->placeholder), parsedArgs.{!! $parameter->name !!}{!! when($parameter->optional, '?') !!}.toString(){!! when($parameter->optional, " ?? ''") !!})
 @if($loop->last)
             .replace(/\/+$/, '')
 @endif

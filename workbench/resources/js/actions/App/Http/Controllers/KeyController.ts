@@ -30,8 +30,14 @@ export const show: {
         uri: '\/keys\/{key}',
     },
     url: (args) => {
+        const parsedArgs = {
+            key: typeof args.key === 'object'
+                ? args.key.id
+                : args.key,
+        }
+
         return show.definition.uri
-            .replace('{key}', args['key'].toString())
+            .replace('{key}', parsedArgs.key.toString())
             .replace(/\/+$/, '')
     },
     get: (args) => ({
@@ -77,8 +83,14 @@ export const edit: {
         uri: '\/keys\/{key}\/edit',
     },
     url: (args) => {
+        const parsedArgs = {
+            key: typeof args.key === 'object'
+                ? args.key.uuid
+                : args.key,
+        }
+
         return edit.definition.uri
-            .replace('{key}', args['key'].toString())
+            .replace('{key}', parsedArgs.key.toString())
             .replace(/\/+$/, '')
     },
     get: (args) => ({

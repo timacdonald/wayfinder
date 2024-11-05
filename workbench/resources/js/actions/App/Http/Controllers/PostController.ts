@@ -137,8 +137,14 @@ export const show: {
         uri: '\/posts\/{post}',
     },
     url: (args) => {
+        const parsedArgs = {
+            post: typeof args.post === 'object'
+                ? args.post.id
+                : args.post,
+        }
+
         return show.definition.uri
-            .replace('{post}', args['post'].toString())
+            .replace('{post}', parsedArgs.post.toString())
             .replace(/\/+$/, '')
     },
     get: (args) => ({
@@ -184,8 +190,14 @@ export const edit: {
         uri: '\/posts\/{post}\/edit',
     },
     url: (args) => {
+        const parsedArgs = {
+            post: typeof args.post === 'object'
+                ? args.post.id
+                : args.post,
+        }
+
         return edit.definition.uri
-            .replace('{post}', args['post'].toString())
+            .replace('{post}', parsedArgs.post.toString())
             .replace(/\/+$/, '')
     },
     get: (args) => ({
@@ -224,8 +236,14 @@ export const update: {
         uri: '\/posts\/{post}',
     },
     url: (args) => {
+        const parsedArgs = {
+            post: typeof args.post === 'object'
+                ? args.post.id
+                : args.post,
+        }
+
         return update.definition.uri
-            .replace('{post}', args['post'].toString())
+            .replace('{post}', parsedArgs.post.toString())
             .replace(/\/+$/, '')
     },
     patch: (args) => ({
@@ -259,8 +277,14 @@ export const destroy: {
         uri: '\/posts\/{post}',
     },
     url: (args) => {
+        const parsedArgs = {
+            post: typeof args.post === 'object'
+                ? args.post.id
+                : args.post,
+        }
+
         return destroy.definition.uri
-            .replace('{post}', args['post'].toString())
+            .replace('{post}', parsedArgs.post.toString())
             .replace(/\/+$/, '')
     },
     delete: (args) => ({

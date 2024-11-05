@@ -88,17 +88,17 @@ export const login: {
         ])
 
         const parsedArgs = {
-            userId: typeof args['userId'] === 'object'
-                ? args['userId']['foo']
-                : args['userId'],
-            guard: typeof args['guard'] === 'object'
-                ? args['guard']['foo']
-                : args['guard'],
+            userId: typeof args.userId === 'object'
+                ? args.userId.id
+                : args.userId,
+            guard: typeof args.guard === 'object'
+                ? args.guard.id
+                : args.guard,
         }
 
         return login.definition.uri
-            .replace('{userId}', args['userId'].toString())
-            .replace('{guard?}', args['guard']?.toString() ?? '')
+            .replace('{userId}', parsedArgs.userId.toString())
+            .replace('{guard?}', parsedArgs.guard?.toString() ?? '')
             .replace(/\/+$/, '')
     },
     get: (args) => ({
@@ -149,13 +149,13 @@ export const logout: {
         ])
 
         const parsedArgs = {
-            guard: typeof args?.['guard'] === 'object'
-                ? args['guard']['foo']
-                : args?.['guard'],
+            guard: typeof args?.guard === 'object'
+                ? args.guard.id
+                : args?.guard,
         }
 
         return logout.definition.uri
-            .replace('{guard?}', args?.['guard']?.toString() ?? '')
+            .replace('{guard?}', parsedArgs.guard?.toString() ?? '')
             .replace(/\/+$/, '')
     },
     get: (args) => ({
@@ -206,13 +206,13 @@ export const user: {
         ])
 
         const parsedArgs = {
-            guard: typeof args?.['guard'] === 'object'
-                ? args['guard']['foo']
-                : args?.['guard'],
+            guard: typeof args?.guard === 'object'
+                ? args.guard.id
+                : args?.guard,
         }
 
         return user.definition.uri
-            .replace('{guard?}', args?.['guard']?.toString() ?? '')
+            .replace('{guard?}', parsedArgs.guard?.toString() ?? '')
             .replace(/\/+$/, '')
     },
     get: (args) => ({

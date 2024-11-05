@@ -39,13 +39,13 @@ export const optional: {
         ])
 
         const parsedArgs = {
-            parameter: typeof args?.['parameter'] === 'object'
-                ? args['parameter']['foo']
-                : args?.['parameter'],
+            parameter: typeof args?.parameter === 'object'
+                ? args.parameter.id
+                : args?.parameter,
         }
 
         return optional.definition.uri
-            .replace('{parameter?}', args?.['parameter']?.toString() ?? '')
+            .replace('{parameter?}', parsedArgs.parameter?.toString() ?? '')
             .replace(/\/+$/, '')
     },
     post: (args) => ({
@@ -90,21 +90,21 @@ export const manyOptional: {
         ])
 
         const parsedArgs = {
-            one: typeof args?.['one'] === 'object'
-                ? args['one']['foo']
-                : args?.['one'],
-            two: typeof args?.['two'] === 'object'
-                ? args['two']['foo']
-                : args?.['two'],
-            three: typeof args?.['three'] === 'object'
-                ? args['three']['foo']
-                : args?.['three'],
+            one: typeof args?.one === 'object'
+                ? args.one.id
+                : args?.one,
+            two: typeof args?.two === 'object'
+                ? args.two.id
+                : args?.two,
+            three: typeof args?.three === 'object'
+                ? args.three.id
+                : args?.three,
         }
 
         return manyOptional.definition.uri
-            .replace('{one?}', args?.['one']?.toString() ?? '')
-            .replace('{two?}', args?.['two']?.toString() ?? '')
-            .replace('{three?}', args?.['three']?.toString() ?? '')
+            .replace('{one?}', parsedArgs.one?.toString() ?? '')
+            .replace('{two?}', parsedArgs.two?.toString() ?? '')
+            .replace('{three?}', parsedArgs.three?.toString() ?? '')
             .replace(/\/+$/, '')
     },
     post: (args) => ({
