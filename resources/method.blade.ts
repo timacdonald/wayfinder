@@ -2,7 +2,7 @@
  * @see {!! $controller !!}::{!! $method !!}
  * @see {!! $path !!}:{!! $line !!}
  */
-export const {!! $method !!}: {
+{!! when($method !== '__invoke', 'export ') !!}const {!! $method !!}: {
     definition: {
         methods: (@foreach($verbs as $verb)@js($verb->actual){!! $loop->last ? '' : '|' !!}@endforeach)[],
         uri: @js($uri),
@@ -63,3 +63,8 @@ export const {!! $method !!}: {
     }),
 @endforeach
 }
+@if($method === '__invoke')
+
+export default __invoke
+@endif
+

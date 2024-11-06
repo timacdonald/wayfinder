@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InvokableController;
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\OptionalController;
 use App\Http\Controllers\ParameterNameController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/closure', fn () => 'ok');
+Route::get('/invokable-controller', InvokableController::class);
 
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/create', [PostController::class, 'create']);

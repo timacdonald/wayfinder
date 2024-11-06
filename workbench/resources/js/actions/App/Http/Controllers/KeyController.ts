@@ -51,6 +51,7 @@ export const show: {
         _method: 'head',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\KeyController::edit
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/KeyController.php:12
@@ -104,3 +105,4 @@ export const edit: {
         _method: 'head',
     }),
 }
+

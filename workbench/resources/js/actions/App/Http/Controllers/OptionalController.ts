@@ -54,6 +54,7 @@ export const optional: {
         _method: 'post',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\OptionalController::manyOptional
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/OptionalController.php:12
@@ -113,3 +114,4 @@ export const manyOptional: {
         _method: 'post',
     }),
 }
+

@@ -51,6 +51,7 @@ export const camel: {
         _method: 'head',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\ParameterNameController::studly
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/ParameterNameController.php:12
@@ -104,6 +105,7 @@ export const studly: {
         _method: 'head',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\ParameterNameController::snake
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/ParameterNameController.php:17
@@ -157,6 +159,7 @@ export const snake: {
         _method: 'head',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\ParameterNameController::screamingSnake
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/ParameterNameController.php:22
@@ -210,3 +213,4 @@ export const screamingSnake: {
         _method: 'head',
     }),
 }
+

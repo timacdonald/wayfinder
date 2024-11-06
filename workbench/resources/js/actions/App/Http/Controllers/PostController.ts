@@ -37,6 +37,7 @@ export const index: {
         _method: 'head',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\PostController::create
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:12
@@ -76,6 +77,7 @@ export const create: {
         _method: 'head',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\PostController::store
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:17
@@ -105,6 +107,7 @@ export const store: {
         _method: 'post',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\PostController::show
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:22
@@ -158,6 +161,7 @@ export const show: {
         _method: 'head',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\PostController::edit
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:27
@@ -211,6 +215,7 @@ export const edit: {
         _method: 'head',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\PostController::update
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:32
@@ -252,6 +257,7 @@ export const update: {
         _method: 'patch',
     }),
 }
+
 /**
  * @see \App\Http\Controllers\PostController::destroy
  * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/PostController.php:37
@@ -293,3 +299,4 @@ export const destroy: {
         _method: 'delete',
     }),
 }
+
