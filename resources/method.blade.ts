@@ -9,13 +9,13 @@ export const {!! $method !!}: {
     },
     url: (@if($parameters->isNotEmpty())args{!! when($parameters->every->optional, '?') !!}: {
 @foreach($parameters as $parameter)
-        {!! $parameter->name !!}{!! when($parameter->optional, '?') !!}: string|number|{ {!! $parameter->key !!}: string|number },
+        {!! $parameter->name !!}{!! when($parameter->optional, '?') !!}: string|number|{ {!! $parameter->key ?? 'id' !!}: string|number },
 @endforeach
     }@endif) => string,
 @foreach($verbs as $verb)
     {!! $verb->actual !!}: (@if($parameters->isNotEmpty()){!! 'args' !!}{!! when($parameters->every->optional, '?') !!}: {
 @foreach($parameters as $parameter)
-        {{ $parameter->name }}@if($parameter->optional)?@endif: string|number|{ {!! $parameter->key !!}: string|number },
+        {{ $parameter->name }}@if($parameter->optional)?@endif: string|number|{ {!! $parameter->key ?? 'id' !!}: string|number },
 @endforeach
     }@endif) => {
         action: string,
@@ -41,7 +41,7 @@ export const {!! $method !!}: {
         const parsedArgs = {
 @foreach($parameters as $parameter)
             {!! $parameter->name !!}: typeof args{!! when($parameters->every->optional, '?') !!}.{!! $parameter->name !!} === 'object'
-                ? args.{!! $parameter->name !!}.{!! $parameter->key !!}
+                ? args.{!! $parameter->name !!}.{!! $parameter->key ?? 'id' !!}
                 : args{!! when($parameters->every->optional, '?') !!}.{!! $parameter->name !!},
 @endforeach
         }

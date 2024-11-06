@@ -1,4 +1,4 @@
-import {expect, it} from "vitest";
+import {expect, it, test} from "vitest";
 import {show, edit} from '../workbench/resources/js/actions/App/Http/Controllers/KeyController'
 
 it('can pass objects with id as parameter', () => {
@@ -17,3 +17,8 @@ it('can pass objects with custom key', () => {
     expect(edit.url({ key })).toBe('/keys/547a7452-9dc5-4f64-a275-d646dea6ebcf/edit')
 })
 
+test('definition', () => {
+    expect(Object.keys(edit.definition)).toEqual(['methods', 'uri'])
+    expect(edit.definition.methods).toEqual(['get', 'head'])
+    expect(edit.definition.uri).toBe('/keys/{key:uuid}/edit')
+})

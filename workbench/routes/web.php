@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\KeyController;
 use App\Http\Controllers\OptionalController;
+use App\Http\Controllers\ParameterNameController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,10 +22,12 @@ Route::post('/many-optional/{one?}/{two?}/{three?}', [OptionalController::class,
 Route::get('/keys/{key}', [KeyController::class, 'show']);
 Route::get('/keys/{key:uuid}/edit', [KeyController::class, 'edit']);
 
+Route::get('/parameter-names/{camelCase}/camel', [ParameterNameController::class, 'camel']);
+Route::get('/parameter-names/{StudlyCase}/studly', [ParameterNameController::class, 'studly']);
+Route::get('/parameter-names/{snake_case}/snake', [ParameterNameController::class, 'snake']);
+Route::get('/parameter-names/{SCREAMING_SNAKE_CASE}/screaming-snake', [ParameterNameController::class, 'screamingSnake']);
+
 // Route::put();
 // Route::resource();
 // __invoke
 // domain
-//
-// {parameter_name}
-// {parameter-name}
