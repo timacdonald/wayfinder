@@ -45,7 +45,6 @@ class Route
 
     public function parameters(): Collection
     {
-        dump($this->base);
         $optionalParameters = collect($this->base->toSymfonyRoute()->getDefaults());
 
         return collect($this->base->parameterNames())->map(fn ($name) => new Parameter(
