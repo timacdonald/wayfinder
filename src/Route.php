@@ -1,9 +1,10 @@
 <?php
 
-namespace TiMacDonald\Solder;
+namespace TiMacdonald\Wayfinder;
 
 use Illuminate\Routing\Route as BaseRoute;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use ReflectionClass;
 
 class Route
@@ -20,7 +21,7 @@ class Route
 
     public function dotNamespace(): string
     {
-        return str_replace('\\', '.', $this->base->getControllerClass());
+        return str_replace('\\', '.', Str::chopStart($this->controller(), '\\'));
     }
 
     public function hasInvokableController(): bool
@@ -38,12 +39,13 @@ class Route
     public function controller(): string
     {
         return $this->hasInvokableController()
-            ? "\\{$this->base->getActionName()}"
-            : "\\{$this->base->getControllerClass()}";
+            ? Str::start($this->base->getActionName(), '\\')
+            : Str::start($this->base->getControllerClass(), '\\');
     }
 
     public function parameters(): Collection
     {
+        dump($this->base);
         $optionalParameters = collect($this->base->toSymfonyRoute()->getDefaults());
 
         return collect($this->base->parameterNames())->map(fn ($name) => new Parameter(
@@ -58,6 +60,10 @@ class Route
 
     public function uri(): string
     {
+        if ($domain = $this->base->getDomain()) {
+            return "//{$domain}/{$this->base->uri}";
+        }
+
         return "/{$this->base->uri}";
     }
 

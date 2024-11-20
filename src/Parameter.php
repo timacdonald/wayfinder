@@ -1,6 +1,6 @@
 <?php
 
-namespace TiMacDonald\Solder;
+namespace TiMacDonald\Wayfinder;
 
 class Parameter
 {

@@ -1,6 +1,6 @@
 /**
  * @see \App\Http\Controllers\OptionalController::manyOptional
- * @see /Users/tim/Code/solder/workbench/app/Http/Controllers/OptionalController.php:5
+ * @see /Users/tim/Code/wayfinder/workbench/app/Http/Controllers/OptionalController.php:5
  */
 export const manyOptional: {
     url: (args?: {

@@ -11,7 +11,7 @@ const validateParameters = (args: Record<string, unknown>|undefined, optional: s
 
 /**
  * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::start
- * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:19
+ * @see /Users/tim/Code/wayfinder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:19
  */
 export const start: {
     definition: {
@@ -51,7 +51,7 @@ export const start: {
 
 /**
  * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::login
- * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:61
+ * @see /Users/tim/Code/wayfinder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:61
  */
 export const login: {
     definition: {
@@ -116,7 +116,7 @@ export const login: {
 
 /**
  * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::logout
- * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:85
+ * @see /Users/tim/Code/wayfinder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:85
  */
 export const logout: {
     definition: {
@@ -174,7 +174,7 @@ export const logout: {
 
 /**
  * @see \Orchestra\Workbench\Http\Controllers\WorkbenchController::user
- * @see /Users/tim/Code/solder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:40
+ * @see /Users/tim/Code/wayfinder/vendor/orchestra/workbench/src/Http/Controllers/WorkbenchController.php:40
  */
 export const user: {
     definition: {

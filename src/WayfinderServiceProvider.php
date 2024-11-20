@@ -1,10 +1,10 @@
 <?php
 
-namespace TiMacDonald\Solder;
+namespace TiMacDonald\Wayfinder;
 
 use Illuminate\Support\ServiceProvider;
 
-class SolderServiceProvider extends ServiceProvider
+class WayfinderServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace TiMacDonald\Solder;
+namespace TiMacdonald\Wayfinder;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -13,7 +13,7 @@ use function Illuminate\Filesystem\join_paths;
 
 class GenerateCommand extends Command
 {
-    protected $signature = 'solder:generate {--base=}';
+    protected $signature = 'wayfinder:generate {--base=}';
 
     public function __construct(
         private Filesystem $files,
@@ -37,7 +37,7 @@ class GenerateCommand extends Command
      */
     public function handle()
     {
-        $this->view->addNamespace('solder', __DIR__.'/../resources');
+        $this->view->addNamespace('wayfinder', __DIR__.'/../resources');
         $this->view->addExtension('blade.ts', 'blade');
 
         $this->files->deleteDirectory($this->base());
@@ -58,7 +58,7 @@ class GenerateCommand extends Command
 
         // do not add this unless any method needs it.
         if ($routes->contains(fn (Route $route) => $route->parameters()->contains(fn (Parameter $parameter) => $parameter->optional))) {
-            $content = $this->view->make('solder::validate-parameters')->render();
+            $content = $this->view->make('wayfinder::validate-parameters')->render();
 
             $this->files->append($path, $content);
         }
@@ -68,8 +68,7 @@ class GenerateCommand extends Command
 
     private function writeControllerMethodExport(Route $route, string $path): void
     {
-
-        $this->files->append($path, $this->view->make('solder::method', [
+        $this->files->append($path, $this->view->make('wayfinder::method', [
             'controller' => $route->controller(),
             'method' => $route->method(),
             'path' => $route->controllerPath(),
@@ -88,7 +87,7 @@ class GenerateCommand extends Command
             return;
         }
 
-        $this->files->makeDirectory($directory = join_paths($this->base(), $parent), recursive: true);
+        $this->files->makeDirectory($directory = join_paths($this->base(), $parent), recursive: true, force: true);
 
         $children->each(function ($children, $child) use ($parent, $directory) {
             $this->writeBarrelExport($child, "{$directory}.ts");

@@ -1,5 +1,1 @@
-export * as InvokableController from "./Controllers/InvokableController"
-export * as PostController from "./Controllers/PostController"
-export * as OptionalController from "./Controllers/OptionalController"
-export * as KeyController from "./Controllers/KeyController"
-export * as ParameterNameController from "./Controllers/ParameterNameController"
+export * as DomainController from "./Controllers/DomainController"

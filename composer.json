@@ -1,5 +1,5 @@
 {
-    "name": "timacdonald/solder",
+    "name": "timacdonald/wayfinder",
     "description": "...",
     "keywords": [
         "..."
@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "TiMacDonald\\Solder\\": "src"
+            "TiMacDonald\\Wayfinder\\": "src"
         }
     },
     "autoload-dev": {
@@ -63,7 +63,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "TiMacDonald\\Solder\\SolderServiceProvider"
+                "TiMacDonald\\Wayfinder\\WayfinderServiceProvider"
             ]
         }
     }

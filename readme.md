@@ -1,3 +1,3 @@
-- solder
-- fasten
-- bolt
+# Wayfinder for Laravel
+
+Coming soon...
