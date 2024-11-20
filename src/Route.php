@@ -1,6 +1,6 @@
 <?php
 
-namespace TiMacdonald\Wayfinder;
+namespace TiMacDonald\Wayfinder;
 
 use Illuminate\Routing\Route as BaseRoute;
 use Illuminate\Support\Collection;

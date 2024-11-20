@@ -1,6 +1,6 @@
 <?php
 
-namespace TiMacdonald\Wayfinder;
+namespace TiMacDonald\Wayfinder;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

@@ -1,6 +1,6 @@
 <?php
 
-namespace TiMacdonald\Wayfinder;
+namespace TiMacDonald\Wayfinder;
 
 class Verb
 {
