@@ -59,8 +59,13 @@ class Route
 
     public function uri(): string
     {
+        // TODO need to extract these out an build on the front end.
+        // Does it make sense to use window.location domain as the default?
+        // I think it does...
+        $scheme = $this->base->httpOnly() ? 'http' : 'https';
+
         if ($domain = $this->base->getDomain()) {
-            return "//{$domain}/{$this->base->uri}";
+            return "{$scheme}//{$domain}/{$this->base->uri}";
         }
 
         return "/{$this->base->uri}";
@@ -77,5 +82,10 @@ class Route
         return (new ReflectionClass($this->controller()))
             ->getMethod($this->method())
             ->getStartLine();
+    }
+
+    public function insecure(): bool
+    {
+        return $this->base->httpOnly();
     }
 }

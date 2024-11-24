@@ -75,7 +75,9 @@ class GenerateCommand extends Command
             'line' => $route->controllerMethodLineNumber(),
             'parameters' => $route->parameters(),
             'verbs' => $route->verbs(),
+            'domain' => $route->domain(),
             'uri' => $route->uri(),
+            'insecure' => $route->insecure(),
         ]));
     }
 
