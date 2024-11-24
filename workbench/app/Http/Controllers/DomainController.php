@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 class DomainController
 {
-    public function bar()
+    public function fixedDomain()
     {
         //
     }
 
-    public function baz()
+    public function dynamicDomain()
     {
         //
     }

@@ -1,11 +1,11 @@
 /**
- * @see \App\Http\Controllers\DomainController::bar
+ * @see \App\Http\Controllers\DomainController::fixedDomain
  * @see /Users/tim/Code/wayfinder/workbench/app/Http/Controllers/DomainController.php:7
  */
-export const bar: {
+export const fixedDomain: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/\/example.test\/bar\/{param}',
+        uri: '\/\/example.test\/fixed-domain\/{param}',
     },
     url: (args: {
         param: string|number|{ id: string|number },
@@ -27,7 +27,7 @@ export const bar: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/\/example.test\/bar\/{param}',
+        uri: '\/\/example.test\/fixed-domain\/{param}',
     },
     url: (args) => {
         const parsedArgs = {
@@ -36,30 +36,30 @@ export const bar: {
                 : args.param,
         }
 
-        return bar.definition.uri
+        return fixedDomain.definition.uri
             .replace('{param}', parsedArgs.param.toString())
             .replace(/\/+$/, '')
     },
     get: (args) => ({
-        action: bar.url(args),
+        action: fixedDomain.url(args),
         method: 'get',
         _method: 'get',
     }),
     head: (args) => ({
-        action: bar.url(args),
+        action: fixedDomain.url(args),
         method: 'get',
         _method: 'head',
     }),
 }
 
 /**
- * @see \App\Http\Controllers\DomainController::baz
+ * @see \App\Http\Controllers\DomainController::dynamicDomain
  * @see /Users/tim/Code/wayfinder/workbench/app/Http/Controllers/DomainController.php:12
  */
-export const baz: {
+export const dynamicDomain: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/\/{domain}.test\/baz\/{param}',
+        uri: '\/\/{domain}.au\/dynamic-domain\/{param}',
     },
     url: (args: {
         domain: string|number|{ id: string|number },
@@ -84,7 +84,7 @@ export const baz: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/\/{domain}.test\/baz\/{param}',
+        uri: '\/\/{domain}.au\/dynamic-domain\/{param}',
     },
     url: (args) => {
         const parsedArgs = {
@@ -96,18 +96,18 @@ export const baz: {
                 : args.param,
         }
 
-        return baz.definition.uri
+        return dynamicDomain.definition.uri
             .replace('{domain}', parsedArgs.domain.toString())
             .replace('{param}', parsedArgs.param.toString())
             .replace(/\/+$/, '')
     },
     get: (args) => ({
-        action: baz.url(args),
+        action: dynamicDomain.url(args),
         method: 'get',
         _method: 'get',
     }),
     head: (args) => ({
-        action: baz.url(args),
+        action: dynamicDomain.url(args),
         method: 'get',
         _method: 'head',
     }),

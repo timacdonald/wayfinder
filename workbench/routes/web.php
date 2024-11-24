@@ -31,8 +31,8 @@ Route::get('/parameter-names/{snake_case}/snake', [ParameterNameController::clas
 Route::get('/parameter-names/{SCREAMING_SNAKE_CASE}/screaming-snake', [ParameterNameController::class, 'screamingSnake']);
 
 // HERE
-Route::domain('example.test')->get('/bar/{param}', [DomainController::class, 'bar']);
-Route::domain('{domain}.test')->get('/baz/{param}', [DomainController::class, 'baz']);
+Route::domain('example.test')->get('/fixed-domain/{param}', [DomainController::class, 'fixedDomain']);
+Route::domain('{domain}.au')->get('/dynamic-domain/{param}', [DomainController::class, 'dynamicDomain']);
 
 // domain
 // scheme

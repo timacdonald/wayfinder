@@ -20,5 +20,5 @@ it('can pass objects with custom key', () => {
 test('definition', () => {
     expect(Object.keys(edit.definition)).toEqual(['methods', 'uri'])
     expect(edit.definition.methods).toEqual(['get', 'head'])
-    expect(edit.definition.uri).toBe('/keys/{key:uuid}/edit')
+    expect(edit.definition.uri).toBe('/keys/{key}/edit')
 })
