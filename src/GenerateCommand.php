@@ -68,6 +68,15 @@ class GenerateCommand extends Command
 
     private function writeControllerMethodExport(Route $route, string $path): void
     {
+        // scheme: secure bool, else check for "forceScheme", else scheme of the current request (window.location?)
+        // domain: configured ||
+        // no scheme
+        // no domain
+        // /path?query
+        //
+        // no scheme but domain
+        //  fgro
+
         $this->files->append($path, $this->view->make('wayfinder::method', [
             'controller' => $route->controller(),
             'method' => $route->method(),
