@@ -21,14 +21,7 @@ const __invoke: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/invokable-controller',
     },
     url: () => {
         return __invoke.definition.uri

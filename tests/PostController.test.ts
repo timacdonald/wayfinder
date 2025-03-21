@@ -2,21 +2,13 @@ import { expect, test, describe, beforeEach } from 'vitest'
 import { index, create, store, show, edit, update, destroy } from '../workbench/resources/js/actions/App/Http/Controllers/PostController'
 import {beforeEach} from 'node:test'
 
-
-
-
-
-
-
-
-
 describe('index', async () => {
     test('properties', () => {
       expect(Object.keys(index)).toEqual(['definition', 'url', 'get', 'head'])
     })
 
     test('url', () => {
-        expect(index.url()).toBe('http://localhost:3000/posts')
+        expect(index.url()).toBe('/posts')
     })
 
     test('get', () => {

@@ -27,21 +27,7 @@
 } = {
     definition: {
         methods: [@foreach($verbs as $verb)@js($verb->actual){!! when(! $loop->last, ',') !!}@endforeach],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = {!! 
-                $scheme ? "'{$scheme}" : "globalThis.location.protocol+'//"
-            !!}{!!
-                $domain ? $domain : "'+globalThis.location.host+'"
-            !!}{!!
-                ''
-                // not sure we should consider the port?
-            !!}'
-        },
+        uri: @js($uri),
     },
     url: ({!! when($parameters->isNotEmpty(), 'args') !!}) => {
 @if($parameters->where('optional')->isNotEmpty())

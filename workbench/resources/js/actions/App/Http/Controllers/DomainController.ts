@@ -27,14 +27,7 @@ export const fixedDomain: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//example.test'
-        },
+        uri: '\/fixed-domain\/{param}',
     },
     url: (args) => {
         const parsedArgs = {
@@ -91,14 +84,7 @@ export const dynamicDomain: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//{domain}.au'
-        },
+        uri: '\/dynamic-domain\/{param}',
     },
     url: (args) => {
         const parsedArgs = {

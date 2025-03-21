@@ -27,14 +27,7 @@ export const show: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/keys\/{key}',
     },
     url: (args) => {
         const parsedArgs = {
@@ -88,14 +81,7 @@ export const edit: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/keys\/{key}\/edit',
     },
     url: (args) => {
         const parsedArgs = {

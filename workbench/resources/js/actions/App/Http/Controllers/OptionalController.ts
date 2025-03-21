@@ -31,14 +31,7 @@ export const optional: {
 } = {
     definition: {
         methods: ['post'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/optional\/{parameter?}',
     },
     url: (args) => {
         validateParameters(args, [
@@ -88,14 +81,7 @@ export const manyOptional: {
 } = {
     definition: {
         methods: ['post'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/many-optional\/{one?}\/{two?}\/{three?}',
     },
     url: (args) => {
         validateParameters(args, [

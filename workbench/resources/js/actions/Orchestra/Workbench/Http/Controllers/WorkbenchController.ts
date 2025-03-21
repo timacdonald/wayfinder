@@ -32,14 +32,7 @@ export const start: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/_workbench',
     },
     url: () => {
         return start.definition.uri
@@ -88,14 +81,7 @@ export const login: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/_workbench\/login\/{userId}\/{guard?}',
     },
     url: (args) => {
         validateParameters(args, [
@@ -157,14 +143,7 @@ export const logout: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/_workbench\/logout\/{guard?}',
     },
     url: (args) => {
         validateParameters(args, [
@@ -222,14 +201,7 @@ export const user: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/_workbench\/user\/{guard?}',
     },
     url: (args) => {
         validateParameters(args, [

@@ -6,7 +6,6 @@ use App\Http\Controllers\KeyController;
 use App\Http\Controllers\OptionalController;
 use App\Http\Controllers\ParameterNameController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\SchemeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/closure', fn () => 'ok');
@@ -33,13 +32,3 @@ Route::get('/parameter-names/{SCREAMING_SNAKE_CASE}/screaming-snake', [Parameter
 
 Route::domain('example.test')->get('/fixed-domain/{param}', [DomainController::class, 'fixedDomain']);
 Route::domain('{domain}.au')->get('/dynamic-domain/{param}', [DomainController::class, 'dynamicDomain']);
-
-// scheme
-Route::get('insecure.test', [
-    'http',
-    'action' => SchemeController::class.'@insecure',
-]);
-Route::get('secure.test', [
-    'https',
-    'action' => SchemeController::class.'@secure',
-]);

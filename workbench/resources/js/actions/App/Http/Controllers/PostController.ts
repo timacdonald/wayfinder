@@ -21,14 +21,7 @@ export const index: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/posts',
     },
     url: () => {
         return index.definition.uri
@@ -68,14 +61,7 @@ export const create: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/posts\/create',
     },
     url: () => {
         return create.definition.uri
@@ -110,14 +96,7 @@ export const store: {
 } = {
     definition: {
         methods: ['post'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/posts',
     },
     url: () => {
         return store.definition.uri
@@ -158,14 +137,7 @@ export const show: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/posts\/{post}',
     },
     url: (args) => {
         const parsedArgs = {
@@ -219,14 +191,7 @@ export const edit: {
 } = {
     definition: {
         methods: ['get','head'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/posts\/{post}\/edit',
     },
     url: (args) => {
         const parsedArgs = {
@@ -273,14 +238,7 @@ export const update: {
 } = {
     definition: {
         methods: ['patch'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/posts\/{post}',
     },
     url: (args) => {
         const parsedArgs = {
@@ -322,14 +280,7 @@ export const destroy: {
 } = {
     definition: {
         methods: ['delete'],
-        get uri() {
-            if (this._uri) {
-            console.log('calculated')
-                return this._uri
-            }
-
-            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
-        },
+        uri: '\/posts\/{post}',
     },
     url: (args) => {
         const parsedArgs = {
