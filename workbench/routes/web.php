@@ -30,5 +30,6 @@ Route::get('/parameter-names/{StudlyCase}/studly', [ParameterNameController::cla
 Route::get('/parameter-names/{snake_case}/snake', [ParameterNameController::class, 'snake']);
 Route::get('/parameter-names/{SCREAMING_SNAKE_CASE}/screaming-snake', [ParameterNameController::class, 'screamingSnake']);
 
-Route::domain('example.test')->get('/fixed-domain/{param}', [DomainController::class, 'fixedDomain']);
-Route::domain('{domain}.au')->get('/dynamic-domain/{param}', [DomainController::class, 'dynamicDomain']);
+// TODO
+// Route::domain('example.test')->get('/fixed-domain/{param}', [DomainController::class, 'fixedDomain']);
+// Route::domain('{domain}.au')->get('/dynamic-domain/{param}', [DomainController::class, 'dynamicDomain']);

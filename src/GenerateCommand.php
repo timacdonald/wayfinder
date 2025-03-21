@@ -34,11 +34,7 @@ class GenerateCommand extends Command
      * todo opt into barrel files
      * todo detect parameter types, e.g., number vs string
      * todo filter out vendor files by default?
-     * todo test out tree shaking of unused routes
-     * todo __invoke should be a exported unnamed function
-     * todo routes with column bindings, such as {post:uuid}
      * todo opt in/out of method and _method?
-     * todo: provide @see file link and line number.
      * todo: wrap everything in JS::from ?
      * todo: handle invokable controllers mixed with other methods.
      */
