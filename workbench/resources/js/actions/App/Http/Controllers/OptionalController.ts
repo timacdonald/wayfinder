@@ -16,7 +16,7 @@ const validateParameters = (args: Record<string, unknown>|undefined, optional: s
 export const optional: {
     definition: {
         methods: ('post')[],
-        uri: '\/optional\/{parameter?}',
+        uri: string,
     },
     url: (args?: {
         parameter?: string|number|{ id: string|number },
@@ -31,7 +31,14 @@ export const optional: {
 } = {
     definition: {
         methods: ['post'],
-        uri: '\/optional\/{parameter?}',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         validateParameters(args, [
@@ -62,7 +69,7 @@ export const optional: {
 export const manyOptional: {
     definition: {
         methods: ('post')[],
-        uri: '\/many-optional\/{one?}\/{two?}\/{three?}',
+        uri: string,
     },
     url: (args?: {
         one?: string|number|{ id: string|number },
@@ -81,7 +88,14 @@ export const manyOptional: {
 } = {
     definition: {
         methods: ['post'],
-        uri: '\/many-optional\/{one?}\/{two?}\/{three?}',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         validateParameters(args, [

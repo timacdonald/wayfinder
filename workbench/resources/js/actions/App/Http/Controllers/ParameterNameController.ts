@@ -5,7 +5,7 @@
 export const camel: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/parameter-names\/{camelCase}\/camel',
+        uri: string,
     },
     url: (args: {
         camelCase: string|number|{ id: string|number },
@@ -27,7 +27,14 @@ export const camel: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/parameter-names\/{camelCase}\/camel',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         const parsedArgs = {
@@ -59,7 +66,7 @@ export const camel: {
 export const studly: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/parameter-names\/{StudlyCase}\/studly',
+        uri: string,
     },
     url: (args: {
         StudlyCase: string|number|{ id: string|number },
@@ -81,7 +88,14 @@ export const studly: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/parameter-names\/{StudlyCase}\/studly',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         const parsedArgs = {
@@ -113,7 +127,7 @@ export const studly: {
 export const snake: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/parameter-names\/{snake_case}\/snake',
+        uri: string,
     },
     url: (args: {
         snake_case: string|number|{ id: string|number },
@@ -135,7 +149,14 @@ export const snake: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/parameter-names\/{snake_case}\/snake',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         const parsedArgs = {
@@ -167,7 +188,7 @@ export const snake: {
 export const screamingSnake: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/parameter-names\/{SCREAMING_SNAKE_CASE}\/screaming-snake',
+        uri: string,
     },
     url: (args: {
         SCREAMING_SNAKE_CASE: string|number|{ id: string|number },
@@ -189,7 +210,14 @@ export const screamingSnake: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/parameter-names\/{SCREAMING_SNAKE_CASE}\/screaming-snake',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         const parsedArgs = {

@@ -5,7 +5,7 @@
 export const show: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/keys\/{key}',
+        uri: string,
     },
     url: (args: {
         key: string|number|{ id: string|number },
@@ -27,7 +27,14 @@ export const show: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/keys\/{key}',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         const parsedArgs = {
@@ -59,7 +66,7 @@ export const show: {
 export const edit: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/keys\/{key}\/edit',
+        uri: string,
     },
     url: (args: {
         key: string|number|{ uuid: string|number },
@@ -81,7 +88,14 @@ export const edit: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/keys\/{key}\/edit',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         const parsedArgs = {

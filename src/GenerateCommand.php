@@ -5,9 +5,11 @@ namespace TiMacDonald\Wayfinder;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Routing\Router;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Js;
 use Illuminate\View\Factory;
+use ReflectionProperty;
 
 use function Illuminate\Filesystem\join_paths;
 
@@ -15,10 +17,15 @@ class GenerateCommand extends Command
 {
     protected $signature = 'wayfinder:generate {--base=}';
 
+    private ?string $forcedScheme;
+
+    private ?string $forcedRoot;
+
     public function __construct(
         private Filesystem $files,
         private Router $router,
         private Factory $view,
+        private UrlGenerator $url,
     ) {
         parent::__construct();
     }
@@ -39,6 +46,8 @@ class GenerateCommand extends Command
     {
         $this->view->addNamespace('wayfinder', __DIR__.'/../resources');
         $this->view->addExtension('blade.ts', 'blade');
+        $this->forcedScheme = (new ReflectionProperty($this->url, 'forceScheme'))->getValue($this->url);
+        $this->forcedRoot = (new ReflectionProperty($this->url, 'forcedRoot'))->getValue($this->url);
 
         $this->files->deleteDirectory($this->base());
 
@@ -68,15 +77,25 @@ class GenerateCommand extends Command
 
     private function writeControllerMethodExport(Route $route, string $path): void
     {
-        // scheme: secure bool, else check for "forceScheme", else scheme of the current request (window.location?)
-        // domain: configured ||
+        // scheme:
+        //  - route configured secure bool
+        //  - check for "forceScheme"
+        //  - scheme of the current request (window.location?)
+        // domain:
+        //  - route configured domain
+        //  - forced root
+        //  - root of the current request (window.location?)
+        //  port:
+        //  - when current request is secure and port is 443 or insecure and port is 80 then no port otherwise use the current request's port
         // no scheme
         // no domain
         // /path?query
         //
         // no scheme but domain
         //  fgro
+        //
 
+        // TODO: the port is added to the route when it does not have the correct port / scheme
         $this->files->append($path, $this->view->make('wayfinder::method', [
             'controller' => $route->controller(),
             'method' => $route->method(),
@@ -84,9 +103,10 @@ class GenerateCommand extends Command
             'line' => $route->controllerMethodLineNumber(),
             'parameters' => $route->parameters(),
             'verbs' => $route->verbs(),
-            'domain' => $route->domain(),
+            'scheme' => $route->scheme() ?? $this->forcedScheme,
+            'domain' => $route->domain() ?? $this->forcedRoot,
+            'port' => '',
             'uri' => $route->uri(),
-            'insecure' => $route->insecure(),
         ]));
     }
 

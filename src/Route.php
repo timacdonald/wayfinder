@@ -62,9 +62,17 @@ class Route
         return "/{$this->base->uri}";
     }
 
-    public function scheme(): string
+    public function scheme(): ?string
     {
-        return $this->base->httpOnly() ? 'http' : 'https';
+        if ($this->base->httpOnly()) {
+            return 'http';
+        }
+
+        if ($this->base->httpsOnly()) {
+            return 'https';
+        }
+
+        return null;
     }
 
     public function domain(): ?string
@@ -83,10 +91,5 @@ class Route
         return (new ReflectionClass($this->controller()))
             ->getMethod($this->method())
             ->getStartLine();
-    }
-
-    public function insecure(): bool
-    {
-        return $this->base->httpOnly();
     }
 }

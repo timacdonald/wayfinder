@@ -16,7 +16,7 @@ const validateParameters = (args: Record<string, unknown>|undefined, optional: s
 export const start: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/_workbench',
+        uri: string,
     },
     url: () => string,
     get: () => {
@@ -32,7 +32,14 @@ export const start: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/_workbench',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: () => {
         return start.definition.uri
@@ -56,7 +63,7 @@ export const start: {
 export const login: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/_workbench\/login\/{userId}\/{guard?}',
+        uri: string,
     },
     url: (args: {
         userId: string|number|{ id: string|number },
@@ -81,7 +88,14 @@ export const login: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/_workbench\/login\/{userId}\/{guard?}',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         validateParameters(args, [
@@ -121,7 +135,7 @@ export const login: {
 export const logout: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/_workbench\/logout\/{guard?}',
+        uri: string,
     },
     url: (args?: {
         guard?: string|number|{ id: string|number },
@@ -143,7 +157,14 @@ export const logout: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/_workbench\/logout\/{guard?}',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         validateParameters(args, [
@@ -179,7 +200,7 @@ export const logout: {
 export const user: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/_workbench\/user\/{guard?}',
+        uri: string,
     },
     url: (args?: {
         guard?: string|number|{ id: string|number },
@@ -201,7 +222,14 @@ export const user: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/_workbench\/user\/{guard?}',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         validateParameters(args, [

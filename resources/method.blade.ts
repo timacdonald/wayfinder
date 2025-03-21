@@ -1,3 +1,4 @@
+@use('Illuminate\Support\HtmlString')
 /**
  * @see {!! $controller !!}::{!! $method !!}
  * @see {!! $path !!}:{!! $line !!}
@@ -5,7 +6,7 @@
 {!! when($method !== '__invoke', 'export ') !!}const {!! $method !!}: {
     definition: {
         methods: (@foreach($verbs as $verb)@js($verb->actual){!! $loop->last ? '' : '|' !!}@endforeach)[],
-        uri: @js($uri),
+        uri: string,
     },
     url: (@if($parameters->isNotEmpty())args{!! when($parameters->every->optional, '?') !!}: {
 @foreach($parameters as $parameter)
@@ -26,7 +27,21 @@
 } = {
     definition: {
         methods: [@foreach($verbs as $verb)@js($verb->actual){!! when(! $loop->last, ',') !!}@endforeach],
-        uri: @js($uri),
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = {!! 
+                $scheme ? "'{$scheme}" : "globalThis.location.protocol+'//"
+            !!}{!!
+                $domain ? $domain : "'+globalThis.location.host+'"
+            !!}{!!
+                ''
+                // not sure we should consider the port?
+            !!}'
+        },
     },
     url: ({!! when($parameters->isNotEmpty(), 'args') !!}) => {
 @if($parameters->where('optional')->isNotEmpty())

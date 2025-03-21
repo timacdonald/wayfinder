@@ -1,5 +1,14 @@
-import { expect, test, describe } from 'vitest'
+import { expect, test, describe, beforeEach } from 'vitest'
 import { index, create, store, show, edit, update, destroy } from '../workbench/resources/js/actions/App/Http/Controllers/PostController'
+import {beforeEach} from 'node:test'
+
+
+
+
+
+
+
+
 
 describe('index', async () => {
     test('properties', () => {
@@ -7,7 +16,7 @@ describe('index', async () => {
     })
 
     test('url', () => {
-        expect(index.url()).toBe('/posts')
+        expect(index.url()).toBe('http://localhost:3000/posts')
     })
 
     test('get', () => {

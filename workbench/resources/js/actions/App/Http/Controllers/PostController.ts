@@ -5,7 +5,7 @@
 export const index: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/posts',
+        uri: string,
     },
     url: () => string,
     get: () => {
@@ -21,7 +21,14 @@ export const index: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/posts',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: () => {
         return index.definition.uri
@@ -45,7 +52,7 @@ export const index: {
 export const create: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/posts\/create',
+        uri: string,
     },
     url: () => string,
     get: () => {
@@ -61,7 +68,14 @@ export const create: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/posts\/create',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: () => {
         return create.definition.uri
@@ -85,7 +99,7 @@ export const create: {
 export const store: {
     definition: {
         methods: ('post')[],
-        uri: '\/posts',
+        uri: string,
     },
     url: () => string,
     post: () => {
@@ -96,7 +110,14 @@ export const store: {
 } = {
     definition: {
         methods: ['post'],
-        uri: '\/posts',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: () => {
         return store.definition.uri
@@ -115,7 +136,7 @@ export const store: {
 export const show: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/posts\/{post}',
+        uri: string,
     },
     url: (args: {
         post: string|number|{ id: string|number },
@@ -137,7 +158,14 @@ export const show: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/posts\/{post}',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         const parsedArgs = {
@@ -169,7 +197,7 @@ export const show: {
 export const edit: {
     definition: {
         methods: ('get'|'head')[],
-        uri: '\/posts\/{post}\/edit',
+        uri: string,
     },
     url: (args: {
         post: string|number|{ id: string|number },
@@ -191,7 +219,14 @@ export const edit: {
 } = {
     definition: {
         methods: ['get','head'],
-        uri: '\/posts\/{post}\/edit',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         const parsedArgs = {
@@ -223,7 +258,7 @@ export const edit: {
 export const update: {
     definition: {
         methods: ('patch')[],
-        uri: '\/posts\/{post}',
+        uri: string,
     },
     url: (args: {
         post: string|number|{ id: string|number },
@@ -238,7 +273,14 @@ export const update: {
 } = {
     definition: {
         methods: ['patch'],
-        uri: '\/posts\/{post}',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         const parsedArgs = {
@@ -265,7 +307,7 @@ export const update: {
 export const destroy: {
     definition: {
         methods: ('delete')[],
-        uri: '\/posts\/{post}',
+        uri: string,
     },
     url: (args: {
         post: string|number|{ id: string|number },
@@ -280,7 +322,14 @@ export const destroy: {
 } = {
     definition: {
         methods: ['delete'],
-        uri: '\/posts\/{post}',
+        get uri() {
+            if (this._uri) {
+            console.log('calculated')
+                return this._uri
+            }
+
+            return this._uri = globalThis.location.protocol+'//'+globalThis.location.host+''
+        },
     },
     url: (args) => {
         const parsedArgs = {
